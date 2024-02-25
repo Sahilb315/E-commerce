@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 // }
 
 class AppColors {
-  static Color backgroundColor = const Color(0XFF039BE5).withOpacity(1);
+  static Color backgroundColor = Color.fromRGBO(3, 155, 229, 1).withOpacity(1);
   // Amber
   static Color get amber500 => const Color(0XFFFFC107);
 

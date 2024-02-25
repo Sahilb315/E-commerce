@@ -1,6 +1,6 @@
 name: e_commerce_app
 description: "A new Flutter project."
-# The following line prevents the package from being accidentally published to
+# The following line prevents the package from bein g accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
@@ -43,8 +43,9 @@ dependencies:
   cloud_firestore: ^4.15.5
   image_picker: ^1.0.7
 
+
 dev_dependencies:
-  flutter_test:
+  flutter_test: 
     sdk: flutter
 
   # The "flutter_lints" package below contains a set of recommended lints to
@@ -53,7 +54,17 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^3.0.0
+  flutter_native_splash: ^2.3.10
 
+flutter_native_splash: 
+  color: "#0284c7"
+  web: false
+  image: "assets/splash_image.png"
+
+  android_12: 
+   image: "assets/splash_image.png"
+   color: "#0284c7"
+  
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -95,3 +106,4 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+  

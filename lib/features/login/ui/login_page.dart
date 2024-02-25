@@ -1,5 +1,8 @@
-import 'package:e_commerce_app/components/email_textfield.dart';
+// ignore_for_file: unrelated_type_equality_checks
+
+import 'package:e_commerce_app/components/custom_textfield.dart';
 import 'package:e_commerce_app/components/password_textfield.dart';
+import 'package:e_commerce_app/features/home/ui/home_page.dart';
 import 'package:e_commerce_app/features/login/bloc/login_bloc.dart';
 import 'package:e_commerce_app/features/login/ui/widget/sign_in_button.dart';
 import 'package:e_commerce_app/features/register/ui/register_page.dart';
@@ -37,6 +40,36 @@ class _LoginPageState extends State<LoginPage> {
               PageRouteBuilder(
                 pageBuilder: (context, animation, secondaryAnimation) =>
                     const RegisterPage(),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) {
+                  var begin = const Offset(1.0, 0.0);
+                  var end = Offset.zero;
+                  var curve = Curves.easeIn;
+
+                  var tween = Tween(begin: begin, end: end)
+                      .chain(CurveTween(curve: curve));
+                  return SlideTransition(
+                    position: animation.drive(tween),
+                    child: child,
+                  );
+                },
+              ),
+            );
+          } else if (state is LoginInvalidInputActionState) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                backgroundColor: AppColors.backgroundColor.withOpacity(0.5),
+                content: const Text("Fill out all fields"),
+              ),
+            );
+          } else if (state is LoginSuccessfulActionState){
+             Navigator.popUntil(
+                context, (route) => route == const LoginPage());
+            Navigator.push(
+              context,
+              PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) =>
+                    const HomePage(),
                 transitionsBuilder:
                     (context, animation, secondaryAnimation, child) {
                   var begin = const Offset(1.0, 0.0);
@@ -108,7 +141,14 @@ class _LoginPageState extends State<LoginPage> {
                       height: 15,
                     ),
                     SignInButton(
-                      onTap: () {},
+                      onTap: () {
+                        loginBloc.add(
+                          LoginPageSignInButtonClickedEvent(
+                            email: _emailController.text,
+                            password: _passwordController.text,
+                          ),
+                        );
+                      },
                       text: "Sign in",
                       displayPrefixImage: false,
                     ),
@@ -162,7 +202,8 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                         GestureDetector(
-                          onTap: () => loginBloc.add(LoginPageNavigateToRegisterPageEvent()),
+                          onTap: () => loginBloc
+                              .add(LoginPageNavigateToRegisterPageEvent()),
                           child: Text(
                             " Register",
                             style: TextStyle(

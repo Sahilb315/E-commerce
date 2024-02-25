@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/features/login/ui/login_page.dart';
+import 'package:e_commerce_app/features/user_session/auth_state_changes.dart';
 import 'package:e_commerce_app/utils/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +18,7 @@ class _SplashPageState extends State<SplashPage> {
       () => Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (_) => const LoginPage(),
+          builder: (_) => const AuthStateChangesPage(),
         ),
       ),
     );

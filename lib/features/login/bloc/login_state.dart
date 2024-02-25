@@ -11,4 +11,6 @@ class LoginSuccessfulActionState extends LoginActionState {}
 
 class LoginErrorActionState extends LoginActionState {}
 
+class LoginInvalidInputActionState extends LoginActionState {}
+
 class LoginPageNavigateToRegisterPageActionState extends LoginActionState {}

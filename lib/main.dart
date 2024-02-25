@@ -1,12 +1,12 @@
-import 'package:e_commerce_app/features/splash/splash_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'package:e_commerce_app/features/user_session/auth_state_changes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-  options: DefaultFirebaseOptions.currentPlatform,
+    options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(const MyApp());
 }
@@ -16,9 +16,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  return const MaterialApp(
-    home: SplashPage(),
-    debugShowCheckedModeBanner: false,
-  );
+    return const MaterialApp(
+      home: AuthStateChangesPage(),
+      debugShowCheckedModeBanner: false,
+    );
   }
 }

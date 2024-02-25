@@ -3,6 +3,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:e_commerce_app/features/login/repo/login_repo.dart';
 import 'package:meta/meta.dart';
 
 part 'login_event.dart';
@@ -17,17 +18,29 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         loginPageNavigateToRegisterPageEvent);
   }
 
+  final loginRepo = LoginRepo();
+
   FutureOr<void> loginPageSignInButtonClickedEvent(
       LoginPageSignInButtonClickedEvent event, Emitter<LoginState> emit) {
-    emit(LoginSuccessfulActionState());
-    // If error show Snackbar 
-    emit(LoginErrorActionState());
+    try {
+      if (event.email.isEmpty || event.password.isEmpty) {
+        emit(LoginInvalidInputActionState());
+      } else {
+        loginRepo.loginUser(
+          event.email,
+          event.password,
+        );
+        emit(LoginSuccessfulActionState());
+      }
+    } catch (e) {
+      emit(LoginErrorActionState());
+    }
   }
 
   FutureOr<void> loginPageGoogleSignInButtonClickedEvent(
       LoginPageGoogleSignInButtonClickedEvent event, Emitter<LoginState> emit) {
     emit(LoginSuccessfulActionState());
-    // If error show Snackbar 
+    // If error show Snackbar
     emit(LoginErrorActionState());
   }
 

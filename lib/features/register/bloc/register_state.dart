@@ -9,6 +9,10 @@ final class RegisterInitial extends RegisterState {}
 
 class RegisterNavigatToLoginPageActionState extends RegisterActionState {}
 
+class RegisterLoadingActionState extends RegisterActionState {}
+
 class RegisterSuccessfulActionState extends RegisterActionState {}
 
 class RegisterErrorActionState extends RegisterActionState {}
+
+class RegisterInvalidInputActionState extends RegisterActionState {}
