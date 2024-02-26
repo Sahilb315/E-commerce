@@ -13,6 +13,8 @@ part 'home_state.dart';
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc() : super(HomeInitial()) {
     on<HomeInitialEvent>(homeFetchProductsEvent);
+    on<HomeFavouriteBtnClickedEvent>(homeFavouriteBtnClickedEvent);
+    on<HomeProductTileClickedEvent>(homeProductTileClickedEvent);
   }
 
   final homeRepo = HomeRepo();
@@ -26,5 +28,15 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       products: productsList,
       bestSellerProducts: bestSellerProductsList,
     ));
+  }
+
+  FutureOr<void> homeFavouriteBtnClickedEvent(
+      HomeFavouriteBtnClickedEvent event, Emitter<HomeState> emit) {
+    emit(HomeNavigateToFavouritePageActionState());
+  }
+
+  FutureOr<void> homeProductTileClickedEvent(
+      HomeProductTileClickedEvent event, Emitter<HomeState> emit) {
+    emit(HomeNavigateToProductPageActionState(productModel: event.productModel));
   }
 }

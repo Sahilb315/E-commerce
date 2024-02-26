@@ -15,7 +15,18 @@ class HomeSuccessState extends HomeState {
   final List<ProductModel> products;
   final List<ProductModel> bestSellerProducts;
 
-  HomeSuccessState({required this.products, required this.bestSellerProducts});
+  HomeSuccessState({
+    required this.products,
+    required this.bestSellerProducts,
+  });
 }
 
 class HomeErrorState extends HomeState {}
+
+class HomeNavigateToFavouritePageActionState extends HomeActionState {}
+
+class HomeNavigateToProductPageActionState extends HomeActionState {
+  final ProductModel productModel;
+
+  HomeNavigateToProductPageActionState({required this.productModel});
+}

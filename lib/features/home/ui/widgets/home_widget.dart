@@ -14,8 +14,9 @@ class MyHomeWidget extends StatelessWidget {
     required this.pageController,
     required this.bestSellerProducts,
     required this.allProducts,
+    required this.onTap,
   });
-
+  final void Function()? onTap;
   final PageController pageController;
   final List<ProductModel> bestSellerProducts;
   final List<ProductModel> allProducts;
@@ -90,6 +91,7 @@ class MyHomeWidget extends StatelessWidget {
                 child: SizedBox(
                   width: 145,
                   child: ProductTile(
+                    onTap: () {},
                     productModel: bestSellerProducts[index],
                   ),
                 ),
@@ -128,6 +130,7 @@ class MyHomeWidget extends StatelessWidget {
             itemCount: allProducts.length,
             itemBuilder: (context, index) {
               return ProductTile(
+                onTap: onTap,
                 productModel: allProducts[index],
               );
             },
