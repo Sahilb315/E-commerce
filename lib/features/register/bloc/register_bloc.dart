@@ -24,7 +24,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   }
 
   FutureOr<void> registerButtonClickedEvent(
-      RegisterButtonClickedEvent event, Emitter<RegisterState> emit) {
+      RegisterButtonClickedEvent event, Emitter<RegisterState> emit) async{
     if (event.user.email.isEmpty ||
         event.user.fullName.isEmpty ||
         event.user.phoneNumber.isEmpty ||
@@ -35,7 +35,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       // Register User
       try {
         emit(RegisterLoadingActionState());
-        registerRepo.registerUser(event.user, event.password);
+       await registerRepo.registerUser(event.user, event.password);
         emit(RegisterSuccessfulActionState());
       } catch (e) {
         emit(RegisterErrorActionState());

@@ -21,12 +21,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final loginRepo = LoginRepo();
 
   FutureOr<void> loginPageSignInButtonClickedEvent(
-      LoginPageSignInButtonClickedEvent event, Emitter<LoginState> emit) {
+      LoginPageSignInButtonClickedEvent event, Emitter<LoginState> emit) async{
     try {
       if (event.email.isEmpty || event.password.isEmpty) {
         emit(LoginInvalidInputActionState());
       } else {
-        loginRepo.loginUser(
+       await loginRepo.loginUser(
           event.email,
           event.password,
         );

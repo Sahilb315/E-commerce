@@ -42,6 +42,8 @@ dependencies:
   firebase_auth: ^4.17.5
   cloud_firestore: ^4.15.5
   image_picker: ^1.0.7
+  http: ^1.2.0
+  smooth_page_indicator: ^1.1.0
 
 
 dev_dependencies:
