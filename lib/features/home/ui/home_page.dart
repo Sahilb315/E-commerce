@@ -179,7 +179,8 @@ class _HomePageState extends State<HomePage> {
                                   height:
                                       MediaQuery.sizeOf(context).height * 0.2,
                                   child: HomeBannerView(
-                                      pageController: pageController),
+                                    pageController: pageController,
+                                  ),
                                 ),
                               ),
                               Align(

@@ -1,6 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
-class HomeBannerView extends StatelessWidget {
+class HomeBannerView extends StatefulWidget {
   const HomeBannerView({
     super.key,
     required this.pageController,
@@ -9,9 +11,44 @@ class HomeBannerView extends StatelessWidget {
   final PageController pageController;
 
   @override
+  State<HomeBannerView> createState() => _HomeBannerViewState();
+}
+
+class _HomeBannerViewState extends State<HomeBannerView> {
+  int currentIndex = 0;
+  @override
+  void initState() {
+    super.initState();
+    Timer.periodic(
+      const Duration(seconds: 4),
+      (Timer timer) {
+        if (currentIndex < 2) {
+          currentIndex++;
+          widget.pageController.animateToPage(
+            currentIndex,
+            duration: const Duration(milliseconds: 350),
+            curve: Curves.easeIn,
+          );
+        } else {
+          currentIndex = -1;
+        }
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    widget.pageController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return PageView(
-      controller: pageController,
+      onPageChanged: (index) {
+        currentIndex = index;
+      },
+      controller: widget.pageController,
       children: [
         Padding(
           padding: const EdgeInsets.all(8.0),
