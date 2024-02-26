@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 class ProductTile extends StatelessWidget {
   final ProductModel productModel;
   final void Function()? onTap;
-  const ProductTile({super.key, required this.productModel,required this.onTap});
+  const ProductTile(
+      {super.key, required this.productModel, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
