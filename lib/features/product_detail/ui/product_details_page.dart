@@ -58,7 +58,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
               SnackBar(
                 backgroundColor: AppColors.backgroundColor.withOpacity(0.7),
                 content: const Text("Product is added to Favourites"),
-                duration: const Duration(seconds: 2),
+                duration: const Duration(seconds: 1),
               ),
             );
           } else if (state is ProductRemovedFromFavouriteActionState) {
@@ -67,7 +67,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
               SnackBar(
                 backgroundColor: AppColors.backgroundColor.withOpacity(0.7),
                 content: const Text("Product is removed from Favourites"),
-                duration: const Duration(seconds: 2),
+                duration: const Duration(seconds: 1),
               ),
             );
           }
@@ -131,10 +131,10 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                     );
                                   } else {
                                     productBloc.add(
-                                    ProductDetailProductAddedToFavouriteEvent(
-                                      productModel: widget.productModel,
-                                    ),
-                                  );
+                                      ProductDetailProductAddedToFavouriteEvent(
+                                        productModel: widget.productModel,
+                                      ),
+                                    );
                                   }
                                 },
                                 icon: Icon(
