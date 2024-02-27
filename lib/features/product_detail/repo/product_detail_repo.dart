@@ -1,9 +1,11 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/features/home/model/product_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class ProductDetailRepo {
-  Future<bool> addProductToFavourites(ProductModel productModel) async {
+  Future<void> addProductToFavourites(ProductModel productModel) async {
     bool value = await productExistsInFavOrNot(productModel);
     if (value) {
       //* If exists remove product
@@ -13,7 +15,6 @@ class ProductDetailRepo {
           .update({
         'favProducts': FieldValue.arrayRemove([productModel.toMap()])
       });
-      return false;
     } else {
       //* If not exists add product
       await FirebaseFirestore.instance
@@ -22,7 +23,6 @@ class ProductDetailRepo {
           .update({
         'favProducts': FieldValue.arrayUnion([productModel.toMap()])
       });
-      return true;
     }
   }
 
@@ -40,6 +40,19 @@ class ProductDetailRepo {
     } else {
       return false;
     }
+  }
+  
+  Future<List<ProductModel>> fetchFavProducts() async {
+    DocumentSnapshot doc = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.email.toString())
+        .get();
+    Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+    List favs = data['favProducts'];
+    List<ProductModel> favProducts =
+        favs.map((e) => ProductModel.fromMap(e)).toList();
+    log(favProducts.toString());
+    return favProducts;
   }
 
   

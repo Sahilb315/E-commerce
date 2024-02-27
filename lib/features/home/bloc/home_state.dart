@@ -28,5 +28,7 @@ class HomeNavigateToFavouritePageActionState extends HomeActionState {}
 class HomeNavigateToProductPageActionState extends HomeActionState {
   final ProductModel productModel;
 
-  HomeNavigateToProductPageActionState({required this.productModel});
+  HomeNavigateToProductPageActionState({
+    required this.productModel,
+  });
 }

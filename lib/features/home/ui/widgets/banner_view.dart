@@ -37,12 +37,6 @@ class _HomeBannerViewState extends State<HomeBannerView> {
   }
 
   @override
-  void dispose() {
-    widget.pageController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return PageView(
       onPageChanged: (index) {

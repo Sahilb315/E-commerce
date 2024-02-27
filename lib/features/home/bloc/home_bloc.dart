@@ -24,10 +24,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     emit(HomeLoadingState());
     final productsList = await homeRepo.fetchProducts();
     final bestSellerProductsList = await homeRepo.fetchBestSellerProducts();
-    emit(HomeSuccessState(
-      products: productsList,
-      bestSellerProducts: bestSellerProductsList,
-    ));
+
+    emit(
+      HomeSuccessState(
+        products: productsList,
+        bestSellerProducts: bestSellerProductsList,
+      ),
+    );
   }
 
   FutureOr<void> homeFavouriteBtnClickedEvent(
@@ -37,6 +40,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   FutureOr<void> homeProductTileClickedEvent(
       HomeProductTileClickedEvent event, Emitter<HomeState> emit) {
-    emit(HomeNavigateToProductPageActionState(productModel: event.productModel));
+    emit(HomeNavigateToProductPageActionState(
+      productModel: event.productModel,
+    ));
   }
 }

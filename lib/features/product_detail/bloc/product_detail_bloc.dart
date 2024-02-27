@@ -12,22 +12,39 @@ part 'product_detail_state.dart';
 
 class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
   ProductDetailBloc() : super(ProductDetailInitialState()) {
-    on<ProductFavouriteButtonClickedEvent>(productFavouriteButtonClickedEvent);
+    on<ProductDetailInitialEvent>(productDetailInitialEvent);
+    on<ProductDetailProductAddedToFavouriteEvent>(
+        productDetailProductAddedToFavouriteEvent);
+    on<ProductDetailProductRemovedFromFavouriteEvent>(
+        productDetailProductRemovedFromFavouriteEvent);
   }
 
   final productRepo = ProductDetailRepo();
 
-  FutureOr<void> productFavouriteButtonClickedEvent(
-      ProductFavouriteButtonClickedEvent event,
+  FutureOr<void> productDetailInitialEvent(
+      ProductDetailInitialEvent event, Emitter<ProductDetailState> emit) async {
+    emit(ProductDetailLoadingState());
+    final favProductsList = await productRepo.fetchFavProducts();
+    emit(ProductDetailLoadedState(favProducts: favProductsList));
+  }
+
+  FutureOr<void> productDetailProductAddedToFavouriteEvent(
+      ProductDetailProductAddedToFavouriteEvent event,
       Emitter<ProductDetailState> emit) async {
-    final productRemovedOrAdded =
-        await productRepo.addProductToFavourites(event.productModel);
-    if (productRemovedOrAdded) {
-      emit(ProductAddedToFavouriteActionState());
-      // When the product is added it tells that the product exits in the fav list
-      emit(ProductExistsInFavState());
-    } else {
-      emit(ProductRemovedFromFavouriteActionState());
-    }
+
+    await productRepo.addProductToFavourites(event.productModel);
+    final favProductsList = await productRepo.fetchFavProducts();
+    emit(ProductAddedToFavouriteActionState());
+    emit(ProductDetailLoadedState(favProducts: favProductsList));
+  }
+
+  FutureOr<void> productDetailProductRemovedFromFavouriteEvent(
+      ProductDetailProductRemovedFromFavouriteEvent event,
+      Emitter<ProductDetailState> emit) async {
+
+    await productRepo.addProductToFavourites(event.productModel);
+    final favProductsList = await productRepo.fetchFavProducts();
+    emit(ProductRemovedFromFavouriteActionState());
+    emit(ProductDetailLoadedState(favProducts: favProductsList));
   }
 }

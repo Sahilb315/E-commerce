@@ -10,5 +10,8 @@ class HomeFavouriteBtnClickedEvent extends HomeEvent {}
 class HomeProductTileClickedEvent extends HomeEvent {
   final ProductModel productModel;
 
-  HomeProductTileClickedEvent({required this.productModel});
+  HomeProductTileClickedEvent({
+    required this.productModel,
+  });
 }
+
