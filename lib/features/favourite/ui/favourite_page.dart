@@ -4,7 +4,6 @@ import 'package:e_commerce_app/features/favourite/bloc/favourite_bloc.dart';
 import 'package:e_commerce_app/features/favourite/ui/widgets/favorite_tile.dart';
 import 'package:e_commerce_app/features/product_detail/ui/product_details_page.dart';
 import 'package:e_commerce_app/utils/theme/app_colors.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

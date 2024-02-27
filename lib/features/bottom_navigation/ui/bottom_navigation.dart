@@ -1,7 +1,6 @@
 import 'package:e_commerce_app/features/account/ui/account_page.dart';
 import 'package:e_commerce_app/features/bottom_navigation/bloc/bottom_navigation_bloc.dart';
 import 'package:e_commerce_app/features/cart/ui/cart_page.dart';
-import 'package:e_commerce_app/features/categories/ui/category_page.dart';
 import 'package:e_commerce_app/features/explore/ui/explore_page.dart';
 import 'package:e_commerce_app/features/home/ui/home_page.dart';
 import 'package:e_commerce_app/utils/theme/app_colors.dart';
@@ -18,7 +17,6 @@ class BottomNavigationPage extends StatelessWidget {
     HomePage(),
     ExplorePage(),
     CartPage(),
-    CategoryPage(),
     AccountPage(),
   ];
   @override
@@ -52,10 +50,6 @@ class BottomNavigationPage extends StatelessWidget {
               BottomNavigationBarItem(
                 icon: Icon(CupertinoIcons.shopping_cart),
                 label: "Cart",
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(CupertinoIcons.tag),
-                label: "Category",
               ),
               BottomNavigationBarItem(
                 icon: Icon(CupertinoIcons.person),

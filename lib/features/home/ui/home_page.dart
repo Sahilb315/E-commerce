@@ -12,7 +12,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -29,17 +28,9 @@ class _HomePageState extends State<HomePage> {
     user = FirebaseAuth.instance.currentUser;
   }
 
-  // PageController pageController = PageController(initialPage: 0);
-
   Future<void> _refreshPage() async {
     homeBloc.add(HomeInitialEvent());
   }
-
-  // @override
-  // void dispose() {
-  //   pageController.dispose();
-  //   super.dispose();
-  // }
 
   User? user;
   final homeBloc = HomeBloc();
