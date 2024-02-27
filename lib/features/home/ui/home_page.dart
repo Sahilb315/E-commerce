@@ -29,11 +29,17 @@ class _HomePageState extends State<HomePage> {
     user = FirebaseAuth.instance.currentUser;
   }
 
-  final pageController = PageController();
+  // PageController pageController = PageController(initialPage: 0);
 
   Future<void> _refreshPage() async {
     homeBloc.add(HomeInitialEvent());
   }
+
+  // @override
+  // void dispose() {
+  //   pageController.dispose();
+  //   super.dispose();
+  // }
 
   User? user;
   final homeBloc = HomeBloc();
@@ -177,26 +183,8 @@ class _HomePageState extends State<HomePage> {
                                 padding: const EdgeInsets.all(12.0),
                                 child: SizedBox(
                                   height:
-                                      MediaQuery.sizeOf(context).height * 0.2,
-                                  child: HomeBannerView(
-                                    pageController: pageController,
-                                  ),
-                                ),
-                              ),
-                              Align(
-                                alignment: Alignment.center,
-                                child: SizedBox(
-                                  height: 10,
-                                  child: SmoothPageIndicator(
-                                    effect: WormEffect(
-                                      dotColor: AppColors.blueGray300,
-                                      activeDotColor: AppColors.backgroundColor,
-                                      dotHeight: 10,
-                                      dotWidth: 10,
-                                    ),
-                                    controller: pageController,
-                                    count: 3,
-                                  ),
+                                      MediaQuery.sizeOf(context).height * 0.22,
+                                  child: const HomeBannerView(),
                                 ),
                               ),
                               Padding(
