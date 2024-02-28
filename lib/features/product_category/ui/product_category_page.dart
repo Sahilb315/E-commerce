@@ -22,8 +22,9 @@ class _ProductCategoryPageState extends State<ProductCategoryPage> {
 
   @override
   void initState() {
-    productCategoryBloc
-        .add(ProductCategoryFetchDataEvent(categoryId: widget.categoryId));
+    productCategoryBloc.add(
+      ProductCategoryFetchDataEvent(categoryId: widget.categoryId),
+    );
     super.initState();
   }
 
