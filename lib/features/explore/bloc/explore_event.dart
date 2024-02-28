@@ -4,3 +4,9 @@ part of 'explore_bloc.dart';
 sealed class ExploreEvent {}
 
 class ExploreInitialEvent extends ExploreEvent {}
+
+class ExploreNavigateToProductCategorisedEvent extends ExploreEvent {
+  final int categoryId;
+  final String categoryName;
+  ExploreNavigateToProductCategorisedEvent({required this.categoryName, required this.categoryId});
+}

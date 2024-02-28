@@ -2,7 +2,7 @@
 
 import 'package:e_commerce_app/components/custom_textfield.dart';
 import 'package:e_commerce_app/components/password_textfield.dart';
-import 'package:e_commerce_app/features/home/ui/home_page.dart';
+import 'package:e_commerce_app/features/bottom_navigation/ui/bottom_navigation.dart';
 import 'package:e_commerce_app/features/login/bloc/login_bloc.dart';
 import 'package:e_commerce_app/features/login/ui/widget/sign_in_button.dart';
 import 'package:e_commerce_app/features/register/ui/register_page.dart';
@@ -69,7 +69,7 @@ class _LoginPageState extends State<LoginPage> {
               context,
               PageRouteBuilder(
                 pageBuilder: (context, animation, secondaryAnimation) =>
-                    const HomePage(),
+                    BottomNavigationPage(),
                 transitionsBuilder:
                     (context, animation, secondaryAnimation, child) {
                   var begin = const Offset(1.0, 0.0);

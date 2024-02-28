@@ -2,10 +2,10 @@
 
 import 'package:e_commerce_app/features/explore/bloc/explore_bloc.dart';
 import 'package:e_commerce_app/features/explore/ui/widgets/category_container.dart';
+import 'package:e_commerce_app/features/product_category/ui/product_category_page.dart';
 import 'package:e_commerce_app/utils/theme/app_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ExplorePage extends StatefulWidget {
@@ -23,7 +23,34 @@ class _ExplorePageState extends State<ExplorePage> {
       backgroundColor: Colors.white,
       body: BlocConsumer<ExploreBloc, ExploreState>(
         bloc: exploreBloc,
-        listener: (context, state) {},
+        listenWhen: (previous, current) => current is ExploreActionState,
+        listener: (context, state) {
+          if (state is ExploreNavigateToProductCategoryPageActionState) {
+            Navigator.push(
+              context,
+              PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) =>
+                    ProductCategoryPage(
+                  categoryName: state.categoryName,
+                  categoryId: state.categoryId,
+                ),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) {
+                  var begin = const Offset(1.0, 0.0);
+                  var end = Offset.zero;
+                  var curve = Curves.easeIn;
+
+                  var tween = Tween(begin: begin, end: end)
+                      .chain(CurveTween(curve: curve));
+                  return SlideTransition(
+                    position: animation.drive(tween),
+                    child: child,
+                  );
+                },
+              ),
+            );
+          }
+        },
         builder: (context, state) {
           return CustomScrollView(
             slivers: [
@@ -111,19 +138,37 @@ class _ExplorePageState extends State<ExplorePage> {
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               CategoryContainer(
-                                onTap: () {},
+                                onTap: () {
+                                  exploreBloc.add(
+                                      ExploreNavigateToProductCategorisedEvent(
+                                    categoryName: "Clothing",
+                                    categoryId: 110,
+                                  ));
+                                },
                                 assetImagePath:
                                     "assets/category/men-clothing.png",
                                 heading: "Clothing",
                               ),
                               CategoryContainer(
-                                onTap: () {},
+                                onTap: () {
+                                  exploreBloc.add(
+                                      ExploreNavigateToProductCategorisedEvent(
+                                    categoryId: 112,
+                                    categoryName: "Accessories"
+                                  ));
+                                },
                                 assetImagePath:
                                     "assets/category/men-accessory.png",
                                 heading: "Accessories",
                               ),
                               CategoryContainer(
-                                onTap: () {},
+                                onTap: () {
+                                  exploreBloc.add(
+                                      ExploreNavigateToProductCategorisedEvent(
+                                    categoryId: 113,
+                                    categoryName: "Watches"
+                                  ));
+                                },
                                 assetImagePath: "assets/category/men-watch.png",
                                 heading: "Watches",
                               ),
@@ -143,25 +188,49 @@ class _ExplorePageState extends State<ExplorePage> {
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               CategoryContainer(
-                                onTap: () {},
+                                onTap: () {
+                                  exploreBloc.add(
+                                      ExploreNavigateToProductCategorisedEvent(
+                                    categoryId: 116,
+                                    categoryName: "Dresses"
+                                  ));
+                                },
                                 assetImagePath:
                                     "assets/category/women-clothing.png",
                                 heading: "Dresses",
                               ),
                               CategoryContainer(
-                                onTap: () {},
+                                onTap: () {
+                                  exploreBloc.add(
+                                      ExploreNavigateToProductCategorisedEvent(
+                                    categoryId: 118,
+                                    categoryName: "HandBags"
+                                  ));
+                                },
                                 assetImagePath:
                                     "assets/category/women-handbag.png",
                                 heading: "HandBags",
                               ),
                               CategoryContainer(
-                                onTap: () {},
+                                onTap: () {
+                                  exploreBloc.add(
+                                      ExploreNavigateToProductCategorisedEvent(
+                                    categoryId: 123,
+                                    categoryName: "Jewelry"
+                                  ));
+                                },
                                 assetImagePath:
                                     "assets/category/women-jewelry.png",
                                 heading: "Jewelry",
                               ),
                               CategoryContainer(
-                                onTap: () {},
+                                onTap: () {
+                                  exploreBloc.add(
+                                      ExploreNavigateToProductCategorisedEvent(
+                                    categoryId: 50,
+                                    categoryName: "Beauty"
+                                  ));
+                                },
                                 assetImagePath:
                                     "assets/category/women-beauty.png",
                                 heading: "Beauty",
@@ -182,23 +251,47 @@ class _ExplorePageState extends State<ExplorePage> {
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               CategoryContainer(
-                                onTap: () {},
+                                onTap: () {
+                                  exploreBloc.add(
+                                      ExploreNavigateToProductCategorisedEvent(
+                                    categoryId: 79,
+                                    categoryName: "Cameras"
+                                  ));
+                                },
                                 assetImagePath: "assets/category/camera.png",
                                 heading: "Cameras",
                               ),
                               CategoryContainer(
-                                onTap: () {},
+                                onTap: () {
+                                  exploreBloc.add(
+                                      ExploreNavigateToProductCategorisedEvent(
+                                    categoryId: 69,
+                                    categoryName: "TV Products"
+                                  ));
+                                },
                                 assetImagePath:
                                     "assets/category/television.png",
                                 heading: "TV Products",
                               ),
                               CategoryContainer(
-                                onTap: () {},
+                                onTap: () {
+                                  exploreBloc.add(
+                                      ExploreNavigateToProductCategorisedEvent(
+                                    categoryId: 56,
+                                    categoryName: "Computers"
+                                  ));
+                                },
                                 assetImagePath: "assets/category/computer.png",
                                 heading: "Computers",
                               ),
                               CategoryContainer(
-                                onTap: () {},
+                                onTap: () {
+                                  exploreBloc.add(
+                                      ExploreNavigateToProductCategorisedEvent(
+                                    categoryId: 243,
+                                    categoryName: "Games"
+                                  ));
+                                },
                                 assetImagePath: "assets/category/games.png",
                                 heading: "Games",
                               ),
@@ -212,7 +305,13 @@ class _ExplorePageState extends State<ExplorePage> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               CategoryContainer(
-                                onTap: () {},
+                                onTap: () {
+                                  exploreBloc.add(
+                                      ExploreNavigateToProductCategorisedEvent(
+                                    categoryId: 71,
+                                    categoryName: "Headphones"
+                                  ));
+                                },
                                 assetImagePath:
                                     "assets/category/headphones.png",
                                 heading: "Headphones",
@@ -233,17 +332,35 @@ class _ExplorePageState extends State<ExplorePage> {
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               CategoryContainer(
-                                onTap: () {},
+                                onTap: () {
+                                  exploreBloc.add(
+                                      ExploreNavigateToProductCategorisedEvent(
+                                    categoryId: 166,
+                                    categoryName: "Furniture"
+                                  ));
+                                },
                                 assetImagePath: "assets/category/furniture.png",
                                 heading: "Furniture",
                               ),
                               CategoryContainer(
-                                onTap: () {},
+                                onTap: () {
+                                  exploreBloc.add(
+                                      ExploreNavigateToProductCategorisedEvent(
+                                    categoryId: 270,
+                                    categoryName: "Toys"
+                                  ));
+                                },
                                 assetImagePath: "assets/category/toys.png",
                                 heading: "Toys",
                               ),
                               CategoryContainer(
-                                onTap: () {},
+                                onTap: () {
+                                  exploreBloc.add(
+                                      ExploreNavigateToProductCategorisedEvent(
+                                    categoryId: 104,
+                                    categoryName: "Suitcases"
+                                  ));
+                                },
                                 assetImagePath: "assets/category/suitcase.png",
                                 heading: "Suitcases",
                               ),
