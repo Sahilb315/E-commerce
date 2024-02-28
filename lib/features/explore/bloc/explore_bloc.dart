@@ -3,7 +3,10 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:e_commerce_app/features/home/repo/home_repo.dart';
 import 'package:meta/meta.dart';
+
+import '../../home/model/product_model.dart';
 
 part 'explore_event.dart';
 part 'explore_state.dart';
@@ -13,6 +16,7 @@ class ExploreBloc extends Bloc<ExploreEvent, ExploreState> {
     on<ExploreNavigateToProductCategorisedEvent>(
       exploreNavigateToProductCategorisedEvent,
     );
+    on<ExploreNavigateToSearchPageEvent>(exploreNavigateToSearchPageEvent);
   }
 
   FutureOr<void> exploreNavigateToProductCategorisedEvent(
@@ -22,5 +26,11 @@ class ExploreBloc extends Bloc<ExploreEvent, ExploreState> {
       categoryId: event.categoryId,
       categoryName: event.categoryName,
     ));
+  }
+
+  FutureOr<void> exploreNavigateToSearchPageEvent(
+      ExploreNavigateToSearchPageEvent event, Emitter<ExploreState> emit) async{
+    List<ProductModel> products = await HomeRepo().fetchProducts();
+    emit(ExploreNavigateToSearchPageActionState(products: products));
   }
 }

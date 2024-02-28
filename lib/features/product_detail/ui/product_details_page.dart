@@ -1,6 +1,9 @@
 // ignore_for_file: type_literal_in_constant_pattern
 
+import 'dart:developer';
+
 import 'package:e_commerce_app/features/home/model/product_model.dart';
+import 'package:e_commerce_app/features/home/repo/home_repo.dart';
 import 'package:e_commerce_app/features/product_detail/bloc/product_detail_bloc.dart';
 import 'package:e_commerce_app/utils/theme/app_colors.dart';
 import 'package:flutter/cupertino.dart';
@@ -26,7 +29,10 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
   void initState() {
     productBloc.add(ProductDetailInitialEvent());
     super.initState();
+    log("Product List From Home Repo ${homeRepo.productsList.toString()}");
   }
+
+  final homeRepo = HomeRepo();
 
   @override
   Widget build(BuildContext context) {

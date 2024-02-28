@@ -17,3 +17,9 @@ class ExploreNavigateToProductCategoryPageActionState
     required this.categoryName,
   });
 }
+
+class ExploreNavigateToSearchPageActionState extends ExploreActionState {
+  final List<ProductModel> products;
+
+  ExploreNavigateToSearchPageActionState({required this.products});
+}

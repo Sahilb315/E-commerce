@@ -17,26 +17,22 @@ class HomeBannerView extends StatefulWidget {
 class _HomeBannerViewState extends State<HomeBannerView> {
   PageController pageController = PageController(initialPage: 0);
   int currentIndex = 0;
-  ScrollController scrollController = ScrollController();
+
   @override
   void initState() {
     super.initState();
     Timer.periodic(
-      const Duration(seconds: 4),
+      const Duration(seconds: 3),
       (Timer timer) {
-        if (!scrollController.hasClients) {
-          return;
-        }
-        if (currentIndex < 2) {
+        if (pageController.hasClients && currentIndex < 2) {
           currentIndex++;
           pageController.animateToPage(
             currentIndex,
             duration: const Duration(milliseconds: 350),
             curve: Curves.easeIn,
           );
-        } else {
-          currentIndex = -1;
         }
+        currentIndex = -1;
       },
     );
   }

@@ -6,6 +6,8 @@ import 'package:e_commerce_app/features/home/model/product_model.dart';
 import 'package:http/http.dart' as http;
 
 class HomeRepo {
+  List<ProductModel> productsList = [];
+
   Future<List<ProductModel>> fetchProducts() async {
     try {
       final response = await http.get(Uri.parse(API_KEY));
@@ -15,6 +17,7 @@ class HomeRepo {
         products =
             data.map((product) => ProductModel.fromMap(product)).toList();
       }
+      productsList = products;
       return products;
     } catch (e) {
       log(e.toString());

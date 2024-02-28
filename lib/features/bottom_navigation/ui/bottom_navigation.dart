@@ -7,6 +7,7 @@ import 'package:e_commerce_app/utils/theme/app_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:iconsax/iconsax.dart';
 
 class BottomNavigationPage extends StatelessWidget {
   BottomNavigationPage({super.key});
@@ -40,19 +41,19 @@ class BottomNavigationPage extends StatelessWidget {
             currentIndex: state.tabIndex,
             items: const [
               BottomNavigationBarItem(
-                icon: Icon(CupertinoIcons.house_fill),
+                icon: Icon(Iconsax.home),
                 label: "Home",
               ),
               BottomNavigationBarItem(
-                icon: Icon(CupertinoIcons.search),
+                icon: Icon(Iconsax.search_normal),
                 label: "Explore",
               ),
               BottomNavigationBarItem(
-                icon: Icon(CupertinoIcons.shopping_cart),
+                icon: Icon(Iconsax.shopping_cart),
                 label: "Cart",
               ),
               BottomNavigationBarItem(
-                icon: Icon(CupertinoIcons.person),
+                icon: Icon(Iconsax.user),
                 label: "Account",
               ),
             ],

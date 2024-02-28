@@ -26,6 +26,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     homeBloc.add(HomeInitialEvent());
     user = FirebaseAuth.instance.currentUser;
+    
   }
 
   Future<void> _refreshPage() async {

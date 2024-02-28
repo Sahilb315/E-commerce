@@ -23,8 +23,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       HomeInitialEvent event, Emitter<HomeState> emit) async {
     emit(HomeLoadingState());
     final productsList = await homeRepo.fetchProducts();
-    final bestSellerProductsList = await homeRepo.fetchBestSellerProducts();
-
+    final bestSellerProductsList = await homeRepo.fetchBestSellerProducts();    
     emit(
       HomeSuccessState(
         products: productsList,
