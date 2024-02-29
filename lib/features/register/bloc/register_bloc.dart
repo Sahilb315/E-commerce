@@ -3,7 +3,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:e_commerce_app/features/register/model/user_model.dart';
+import 'package:e_commerce_app/features/home/model/user_model.dart';
 import 'package:e_commerce_app/features/register/repo/register_repo.dart';
 import 'package:meta/meta.dart';
 

@@ -12,5 +12,6 @@ class ExploreNavigateToProductCategorisedEvent extends ExploreEvent {
       {required this.categoryName, required this.categoryId});
 }
 
-class ExploreNavigateToSearchPageEvent extends ExploreEvent {
-}
+class ExploreNavigateToSearchPageEvent extends ExploreEvent {}
+
+class ExploreNavigateToFavPageEvent extends ExploreEvent {}

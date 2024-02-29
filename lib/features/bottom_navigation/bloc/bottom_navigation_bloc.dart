@@ -8,7 +8,7 @@ part 'bottom_navigation_state.dart';
 
 class BottomNavigationBloc
     extends Bloc<BottomNavigationEvent, BottomNavigationState> {
-  BottomNavigationBloc() : super(BottomNavigationInitial(tabIndex: 1)) {
+  BottomNavigationBloc() : super(BottomNavigationInitial(tabIndex: 0)) {
     on<BottomNavigationEvent>((event, emit) {
       if (event is NavigationTabChange) {
         emit(BottomNavigationInitial(tabIndex: event.index));

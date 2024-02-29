@@ -16,3 +16,11 @@ class ProductDetailProductRemovedFromFavouriteEvent extends ProductDetailEvent {
 
   ProductDetailProductRemovedFromFavouriteEvent({required this.productModel});
 }
+
+class ProductDetailProductAddToCartEvent extends ProductDetailEvent {
+  final CartModel productModel;
+
+  ProductDetailProductAddToCartEvent({required this.productModel});
+}
+
+class ProductDetailNavigateToCartPageEvent extends ProductDetailEvent {}

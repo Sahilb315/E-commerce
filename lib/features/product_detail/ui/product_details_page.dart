@@ -2,12 +2,16 @@
 
 import 'dart:developer';
 
+import 'package:e_commerce_app/features/cart/model/cart_model.dart';
+import 'package:e_commerce_app/features/cart/ui/cart_page.dart';
 import 'package:e_commerce_app/features/home/model/product_model.dart';
 import 'package:e_commerce_app/features/home/repo/home_repo.dart';
 import 'package:e_commerce_app/features/product_detail/bloc/product_detail_bloc.dart';
+import 'package:e_commerce_app/features/product_detail/ui/widgets/custom_button.dart';
 import 'package:e_commerce_app/utils/theme/app_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
@@ -74,6 +78,117 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                 backgroundColor: AppColors.backgroundColor.withOpacity(0.7),
                 content: const Text("Product is removed from Favourites"),
                 duration: const Duration(seconds: 1),
+              ),
+            );
+          } else if (state is ProductDetailProductAddedToCartActionState) {
+            final cartList = state.cartItems;
+            int itemsInCart = 0;
+            double cartPriceTotal = 0;
+            for (var element in cartList) {
+              int productQuantity = element.totalItemCount!;
+              itemsInCart += productQuantity;
+              cartPriceTotal += element.price * productQuantity;
+            }
+            showModalBottomSheet(
+              backgroundColor: Colors.white,
+              context: context,
+              builder: (context) {
+                return SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8.0,
+                      vertical: 12,
+                    ),
+                    child: Container(
+                      padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).viewInsets.bottom,
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(right: 4.0),
+                                child: Image.asset('assets/tick.png'),
+                              ),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text(
+                                      "Added to cart",
+                                      maxLines: 1,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                    Text(
+                                      widget.productModel.title.toString(),
+                                      maxLines: 1,
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                    Text(
+                                      "\$${widget.productModel.price}",
+                                      maxLines: 1,
+                                      style: const TextStyle(
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                    Text(
+                                      "Cart Subtotal ($itemsInCart): \$${cartPriceTotal.round()}",
+                                      maxLines: 1,
+                                      style: const TextStyle(
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          CustomButton(
+                            onTap: () {
+                              productBloc
+                                  .add(ProductDetailNavigateToCartPageEvent());
+                            },
+                            heading: "Go to cart",
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              },
+            );
+          } else if (state is ProductDetailNavigateToCartPageActionState) {
+            Navigator.pop(context);
+            Navigator.push(
+              context,
+              PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) =>
+                    const CartPage(),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) {
+                  var begin = const Offset(1.0, 0.0);
+                  var end = Offset.zero;
+                  var curve = Curves.easeIn;
+
+                  var tween = Tween(begin: begin, end: end)
+                      .chain(CurveTween(curve: curve));
+                  return SlideTransition(
+                    position: animation.drive(tween),
+                    child: child,
+                  );
+                },
               ),
             );
           }
@@ -226,54 +341,35 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
         color: Colors.white,
         child: Column(
           children: [
-            GestureDetector(
-              onTap: () {},
-              child: Container(
-                width: double.maxFinite,
-                decoration: BoxDecoration(
-                  color: AppColors.backgroundColor.withOpacity(0.7),
-                  borderRadius: BorderRadius.circular(6),
-                  border: Border.all(color: Colors.transparent),
-                ),
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 16.0),
-                  child: Text(
-                    "Add to cart",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
+            CustomButton(
+              heading: "Add to cart",
+              onTap: () {
+                productBloc.add(
+                  ProductDetailProductAddToCartEvent(
+                    productModel: CartModel(
+                      stars: widget.productModel.stars,
+                      price: widget.productModel.price,
+                      listPrice: widget.productModel.listPrice,
+                      totalItemCount: 1,
+                      asin: widget.productModel.asin,
+                      title: widget.productModel.title,
+                      imgUrl: widget.productModel.imgUrl,
+                      category_id: widget.productModel.category_id,
+                      reviews: widget.productModel.reviews,
+                      isBestSeller: widget.productModel.isBestSeller,
+                      boughtInLastMonth: widget.productModel.boughtInLastMonth,
+                      productURL: widget.productModel.productURL,
                     ),
                   ),
-                ),
-              ),
+                );
+              },
             ),
             const SizedBox(
               height: 10,
             ),
-            GestureDetector(
+            CustomButton(
+              heading: "Buy now",
               onTap: () {},
-              child: Container(
-                width: double.maxFinite,
-                decoration: BoxDecoration(
-                  color: AppColors.backgroundColor.withOpacity(0.7),
-                  borderRadius: BorderRadius.circular(6),
-                  border: Border.all(color: Colors.transparent),
-                ),
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 16.0),
-                  child: Text(
-                    "Buy now",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
-                  ),
-                ),
-              ),
             ),
           ],
         ),

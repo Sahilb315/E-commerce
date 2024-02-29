@@ -4,7 +4,6 @@ import 'package:e_commerce_app/features/cart/ui/cart_page.dart';
 import 'package:e_commerce_app/features/explore/ui/explore_page.dart';
 import 'package:e_commerce_app/features/home/ui/home_page.dart';
 import 'package:e_commerce_app/utils/theme/app_colors.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';

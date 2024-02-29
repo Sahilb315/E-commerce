@@ -23,3 +23,5 @@ class ExploreNavigateToSearchPageActionState extends ExploreActionState {
 
   ExploreNavigateToSearchPageActionState({required this.products});
 }
+
+class ExploreNavigateToFavPageActionState extends ExploreActionState {}

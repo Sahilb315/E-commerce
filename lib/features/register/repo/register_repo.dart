@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:e_commerce_app/features/register/model/user_model.dart';
+import 'package:e_commerce_app/features/home/model/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 

@@ -20,154 +20,108 @@ class SearchPage extends StatelessWidget {
   final searchBloc = SearchBloc();
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<SearchBloc, SearchState>(
-      bloc: searchBloc,
-      listenWhen: (previous, current) => current is SearchActionState,
-      buildWhen: (previous, current) => current is! SearchActionState,
-      listener: (context, state) {
-        if (state is SearchNavigateToProductDetailsPageActionState) {
-          Navigator.push(
-            context,
-            PageRouteBuilder(
-              pageBuilder: (context, animation, secondaryAnimation) =>
-                  ProductDetailsPage(
-                productModel: state.product,
-              ),
-              transitionsBuilder:
-                  (context, animation, secondaryAnimation, child) {
-                var begin = const Offset(1.0, 0.0);
-                var end = Offset.zero;
-                var curve = Curves.easeIn;
-
-                var tween = Tween(begin: begin, end: end)
-                    .chain(CurveTween(curve: curve));
-                return SlideTransition(
-                  position: animation.drive(tween),
-                  child: child,
-                );
-              },
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        surfaceTintColor: Colors.white,
+        title: SizedBox(
+          height: 45,
+          child: TextFormField(
+            controller: searchController,
+            textAlignVertical: TextAlignVertical.top,
+            autofocus: true,
+            style: TextStyle(
+              color: Colors.grey.shade500,
+              fontWeight: FontWeight.w600,
             ),
-          );
-        }
-      },
-      builder: (context, state) {
-        switch (state.runtimeType) {
-          case SearchInitialState:
-            return Scaffold(
-              backgroundColor: Colors.white,
-              appBar: AppBar(
-                backgroundColor: Colors.white,
-                surfaceTintColor: Colors.white,
-                title: SizedBox(
-                  height: 45,
-                  child: TextField(
-                    controller: searchController,
-                    textAlignVertical: TextAlignVertical.top,
-                    autofocus: true,
-                    style: TextStyle(
-                      color: Colors.grey.shade500,
-                      fontWeight: FontWeight.w600,
-                    ),
-                    cursorColor: AppColors.backgroundColor.withOpacity(0.7),
-                    decoration: InputDecoration(
-                      suffixIcon: IconButton(
-                        onPressed: () {
-                          searchController.clear();
-                        },
-                        icon: Icon(
-                          Icons.clear,
-                          color: AppColors.blueGray300,
-                        ),
-                      ),
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey.shade300),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey.shade300),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey.shade300),
-                      ),
-                    ),
-                    onSubmitted: (value) {
-                      for (var element in products) {
-                        if (element.title!.toLowerCase().contains(
-                              value.toLowerCase(),
-                            )) {
-                          searchedProducts.add(element);
-                        }
-                      }
-                      searchBloc.add(SearchTextFieldSubmittedEvent(
-                        searchedProducts: searchedProducts,
-                      ));
-                    },
-                  ),
+            cursorColor: AppColors.backgroundColor.withOpacity(0.7),
+            decoration: InputDecoration(
+              labelText: "Search Products",
+              labelStyle: TextStyle(
+                color: Colors.grey.shade500,
+                fontWeight: FontWeight.w400,
+              ),
+              suffixIcon: IconButton(
+                onPressed: () {
+                  searchController.clear();
+                },
+                icon: Icon(
+                  Icons.clear,
+                  color: AppColors.blueGray300,
                 ),
               ),
+              border: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey.shade300),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey.shade300),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey.shade300),
+              ),
+            ),
+            onFieldSubmitted: (value) {
+              searchedProducts.clear();
+              for (var element in products) {
+                if (element.title!
+                    .toLowerCase()
+                    .contains(value.toLowerCase())) {
+                  if (searchedProducts.contains(element)) return;
+                  searchedProducts.add(element);
+                }
+              }
+              searchBloc.add(SearchTextFieldSubmittedEvent(
+                searchedProducts: searchedProducts,
+              ));
+            },
+          ),
+        ),
+      ),
+      body: BlocConsumer<SearchBloc, SearchState>(
+        bloc: searchBloc,
+        listenWhen: (previous, current) => current is SearchActionState,
+        buildWhen: (previous, current) => current is! SearchActionState,
+        listener: (context, state) {
+          if (state is SearchNavigateToProductDetailsPageActionState) {
+            Navigator.push(
+              context,
+              PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) =>
+                    ProductDetailsPage(
+                  productModel: state.product,
+                ),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) {
+                  var begin = const Offset(1.0, 0.0);
+                  var end = Offset.zero;
+                  var curve = Curves.easeIn;
+
+                  var tween = Tween(begin: begin, end: end)
+                      .chain(CurveTween(curve: curve));
+                  return SlideTransition(
+                    position: animation.drive(tween),
+                    child: child,
+                  );
+                },
+              ),
             );
-          case SearchResultsLoadingState:
-            return Scaffold(
-              body: Center(
+          }
+        },
+        builder: (context, state) {
+          switch (state.runtimeType) {
+            case SearchInitialState:
+              return const SizedBox();
+            case SearchResultsLoadingState:
+              return Center(
                 child: CircularProgressIndicator(
                   strokeWidth: 3,
                   color: AppColors.backgroundColor.withOpacity(0.7),
                   strokeCap: StrokeCap.round,
                 ),
-              ),
-            );
-          case SearchResultsState:
-            return Scaffold(
-              backgroundColor: Colors.white,
-              appBar: AppBar(
-                backgroundColor: Colors.white,
-                surfaceTintColor: Colors.white,
-                title: SizedBox(
-                  height: 45,
-                  child: TextField(
-                    textAlignVertical: TextAlignVertical.top,
-                    controller: searchController,
-                    autofocus: true,
-                    style: TextStyle(
-                      color: Colors.grey.shade500,
-                      fontWeight: FontWeight.w600,
-                    ),
-                    cursorColor: AppColors.backgroundColor.withOpacity(0.7),
-                    decoration: InputDecoration(
-                      suffixIcon: IconButton(
-                        onPressed: () {
-                          searchController.clear();
-                        },
-                        icon: Icon(
-                          Icons.clear,
-                          color: AppColors.blueGray300,
-                        ),
-                      ),
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey.shade300),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey.shade300),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey.shade300),
-                      ),
-                    ),
-                    onSubmitted: (value) {
-                      for (var element in products) {
-                        if (element.title!.toLowerCase().contains(
-                              value.toLowerCase(),
-                            )) {
-                          searchedProducts.add(element);
-                        }
-                      }
-                      searchBloc.add(SearchTextFieldSubmittedEvent(
-                        searchedProducts: searchedProducts,
-                      ));
-                    },
-                  ),
-                ),
-              ),
-              body: Padding(
+              );
+            case SearchResultsState:
+              return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: GridView.builder(
                   shrinkWrap: true,
@@ -191,61 +145,9 @@ class SearchPage extends StatelessWidget {
                     );
                   },
                 ),
-              ),
-            );
-          case SearchNoResultsFoundState:
-            return Scaffold(
-              backgroundColor: Colors.white,
-              appBar: AppBar(
-                backgroundColor: Colors.white,
-                surfaceTintColor: Colors.white,
-                title: SizedBox(
-                  height: 45,
-                  child: TextField(
-                    textAlignVertical: TextAlignVertical.top,
-                    controller: searchController,
-                    autofocus: true,
-                    style: TextStyle(
-                      color: Colors.grey.shade500,
-                      fontWeight: FontWeight.w600,
-                    ),
-                    cursorColor: AppColors.backgroundColor.withOpacity(0.7),
-                    decoration: InputDecoration(
-                      suffixIcon: IconButton(
-                        onPressed: () {
-                          searchController.clear();
-                        },
-                        icon: Icon(
-                          Icons.clear,
-                          color: AppColors.blueGray300,
-                        ),
-                      ),
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey.shade300),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey.shade300),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey.shade300),
-                      ),
-                    ),
-                    onSubmitted: (value) {
-                      for (var element in products) {
-                        if (element.title!.toLowerCase().contains(
-                              value.toLowerCase(),
-                            )) {
-                          searchedProducts.add(element);
-                        }
-                      }
-                      searchBloc.add(SearchTextFieldSubmittedEvent(
-                        searchedProducts: searchedProducts,
-                      ));
-                    },
-                  ),
-                ),
-              ),
-              body: const Center(
+              );
+            case SearchNoResultsFoundState:
+              return const Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -256,12 +158,13 @@ class SearchPage extends StatelessWidget {
                     ),
                   ],
                 ),
-              ),
-            );
-          default:
-            return const SizedBox.shrink();
-        }
-      },
+              );
+
+            default:
+              return const SizedBox.shrink();
+          }
+        },
+      ),
     );
   }
 }

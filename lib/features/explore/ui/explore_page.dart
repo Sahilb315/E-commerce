@@ -5,6 +5,7 @@ import 'package:e_commerce_app/features/explore/ui/widgets/electronic_category.d
 import 'package:e_commerce_app/features/explore/ui/widgets/men_category.dart';
 import 'package:e_commerce_app/features/explore/ui/widgets/other_category.dart';
 import 'package:e_commerce_app/features/explore/ui/widgets/women_category.dart';
+import 'package:e_commerce_app/features/favourite/ui/favourite_page.dart';
 import 'package:e_commerce_app/features/product_category/ui/product_category_page.dart';
 import 'package:e_commerce_app/features/search/ui/search_page.dart';
 import 'package:e_commerce_app/utils/theme/app_colors.dart';
@@ -77,6 +78,28 @@ class _ExplorePageState extends State<ExplorePage> {
                 },
               ),
             );
+          } else if (state is ExploreNavigateToFavPageActionState) {
+            Navigator.push(
+              context,
+              PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) =>
+                    const FavouritePage(),
+                transitionDuration: const Duration(milliseconds: 150),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) {
+                  var begin = const Offset(1.0, 0.0);
+                  var end = Offset.zero;
+                  var curve = Curves.easeIn;
+
+                  var tween = Tween(begin: begin, end: end)
+                      .chain(CurveTween(curve: curve));
+                  return SlideTransition(
+                    position: animation.drive(tween),
+                    child: child,
+                  );
+                },
+              ),
+            );
           }
         },
         builder: (context, state) {
@@ -137,7 +160,9 @@ class _ExplorePageState extends State<ExplorePage> {
                   Padding(
                     padding: const EdgeInsets.only(right: 8.0),
                     child: IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        exploreBloc.add(ExploreNavigateToFavPageEvent());
+                      },
                       icon: Icon(
                         CupertinoIcons.heart,
                         color: AppColors.blueGray300,

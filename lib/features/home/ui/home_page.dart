@@ -26,7 +26,6 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     homeBloc.add(HomeInitialEvent());
     user = FirebaseAuth.instance.currentUser;
-    
   }
 
   Future<void> _refreshPage() async {
@@ -122,22 +121,19 @@ class _HomePageState extends State<HomePage> {
                             width: MediaQuery.sizeOf(context).width * 0.75,
                             child: Row(
                               children: [
-                                Icon(
-                                  CupertinoIcons.search,
-                                  size: 18,
-                                  color: AppColors.backgroundColor,
-                                ),
                                 Padding(
                                   padding: const EdgeInsets.only(
                                     right: 24.0,
                                     left: 10,
                                   ),
                                   child: Text(
-                                    "Seach Products",
+                                    "Shop Vista",
                                     textAlign: TextAlign.left,
                                     style: TextStyle(
-                                      color: AppColors.blueGray300,
-                                      fontSize: 16,
+                                      color: AppColors.backgroundColor
+                                          .withOpacity(0.8),
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.w400,
                                     ),
                                   ),
                                 ),

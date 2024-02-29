@@ -4,10 +4,10 @@ import 'package:e_commerce_app/components/custom_textfield.dart';
 import 'package:e_commerce_app/components/password_textfield.dart';
 import 'package:e_commerce_app/components/phone_num_textfield.dart';
 import 'package:e_commerce_app/features/bottom_navigation/ui/bottom_navigation.dart';
+import 'package:e_commerce_app/features/home/model/user_model.dart';
 import 'package:e_commerce_app/features/login/ui/login_page.dart';
 import 'package:e_commerce_app/features/login/ui/widget/sign_in_button.dart';
 import 'package:e_commerce_app/features/register/bloc/register_bloc.dart';
-import 'package:e_commerce_app/features/register/model/user_model.dart';
 import 'package:e_commerce_app/utils/theme/app_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -184,6 +184,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               phoneNumber:
                                   _phoneNumberController.text.toString(),
                               favProducts: [],
+                              cartItems: [],
                             ),
                           ),
                         );

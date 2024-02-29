@@ -96,44 +96,47 @@ class _FavouritePageState extends State<FavouritePage> {
                   SliverList(
                     delegate: SliverChildListDelegate(
                       [
-                        Column(
-                          children: [
-                            GridView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                mainAxisSpacing: 8,
-                                mainAxisExtent:
-                                    MediaQuery.sizeOf(context).height * 0.35,
-                                crossAxisCount: 2,
-                                crossAxisSpacing: 4,
+                        Padding(
+                          padding: const EdgeInsets.all(6.0),
+                          child: Column(
+                            children: [
+                              GridView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                  mainAxisSpacing: 8,
+                                  mainAxisExtent:
+                                      MediaQuery.sizeOf(context).height * 0.35,
+                                  crossAxisCount: 2,
+                                  crossAxisSpacing: 4,
+                                ),
+                                itemCount: favProducts.length,
+                                itemBuilder: (context, index) {
+                                  return Padding(
+                                    padding: const EdgeInsets.all(2.0),
+                                    child: FavouriteTile(
+                                      productModel: favProducts[index],
+                                      onDeleteTap: () {
+                                        favBloc.add(
+                                          FavouriteProductRemovedEvent(
+                                            productModel: favProducts[index],
+                                          ),
+                                        );
+                                      },
+                                      onTap: () {
+                                        favBloc.add(
+                                          FavouriteNavigateToProductDetailsPageEvent(
+                                            productModel: favProducts[index],
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  );
+                                },
                               ),
-                              itemCount: favProducts.length,
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: const EdgeInsets.all(2.0),
-                                  child: FavouriteTile(
-                                    productModel: favProducts[index],
-                                    onDeleteTap: () {
-                                      favBloc.add(
-                                        FavouriteProductRemovedEvent(
-                                          productModel: favProducts[index],
-                                        ),
-                                      );
-                                    },
-                                    onTap: () {
-                                      favBloc.add(
-                                        FavouriteNavigateToProductDetailsPageEvent(
-                                          productModel: favProducts[index],
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                );
-                              },
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ],
                     ),

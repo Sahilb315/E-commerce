@@ -111,8 +111,8 @@ class _HomeBannerViewState extends State<HomeBannerView> {
             height: 0,
             child: SmoothPageIndicator(
               effect: WormEffect(
-                dotColor: AppColors.blueGray300,
-                activeDotColor: AppColors.backgroundColor,
+                dotColor: AppColors.blueGray300.withOpacity(0.5),
+                activeDotColor: AppColors.backgroundColor.withOpacity(0.6),
                 dotHeight: 10,
                 dotWidth: 10,
               ),

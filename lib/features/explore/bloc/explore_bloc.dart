@@ -17,6 +17,7 @@ class ExploreBloc extends Bloc<ExploreEvent, ExploreState> {
       exploreNavigateToProductCategorisedEvent,
     );
     on<ExploreNavigateToSearchPageEvent>(exploreNavigateToSearchPageEvent);
+    on<ExploreNavigateToFavPageEvent>(exploreNavigateToFavPageEvent);
   }
 
   FutureOr<void> exploreNavigateToProductCategorisedEvent(
@@ -29,8 +30,14 @@ class ExploreBloc extends Bloc<ExploreEvent, ExploreState> {
   }
 
   FutureOr<void> exploreNavigateToSearchPageEvent(
-      ExploreNavigateToSearchPageEvent event, Emitter<ExploreState> emit) async{
+      ExploreNavigateToSearchPageEvent event,
+      Emitter<ExploreState> emit) async {
     List<ProductModel> products = await HomeRepo().fetchProducts();
     emit(ExploreNavigateToSearchPageActionState(products: products));
   }
+
+  FutureOr<void> exploreNavigateToFavPageEvent(
+      ExploreNavigateToFavPageEvent event, Emitter<ExploreState> emit) {
+        emit(ExploreNavigateToFavPageActionState());
+      }
 }
