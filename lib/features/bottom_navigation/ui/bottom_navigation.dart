@@ -8,9 +8,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
 
-class BottomNavigationPage extends StatelessWidget {
-  BottomNavigationPage({super.key});
+class BottomNavigationPage extends StatefulWidget {
+  final int index;
+  const BottomNavigationPage({super.key, required this.index});
 
+  @override
+  State<BottomNavigationPage> createState() => _BottomNavigationPageState();
+}
+
+class _BottomNavigationPageState extends State<BottomNavigationPage> {
   final navigationBloc = BottomNavigationBloc();
 
   final List<Widget> _pages = const [
@@ -19,6 +25,16 @@ class BottomNavigationPage extends StatelessWidget {
     CartPage(),
     AccountPage(),
   ];
+
+  @override
+  void initState() {
+    if (widget.index >= 4 && widget.index < 0) {
+      return;
+    }
+    navigationBloc.add(NavigationTabChange(index: widget.index));
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<BottomNavigationBloc, BottomNavigationState>(

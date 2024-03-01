@@ -80,13 +80,11 @@ class ProductDetailRepo {
 
       for (var element in cartList) {
         if (element.asin == cartModel.asin) {
-          log("Cart Items ${element.toString()}");
           return element.totalItemCount;
         }
       }
       return 1;
     } catch (e) {
-      log(e.toString());
       return 1;
     }
   }
@@ -122,7 +120,7 @@ class ProductDetailRepo {
       Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
       List list = data['cartItems'];
 
-    /// If the product is already in cart then Getting the index of the product and incrementing the itemCount of that product 
+      /// If the product is already in cart then Getting the index of the product and incrementing the itemCount of that product
       int indexToUpdate =
           list.indexWhere((item) => item['asin'] == cartModel.asin);
       if (indexToUpdate != -1) {
@@ -161,4 +159,6 @@ class ProductDetailRepo {
       log("Product Detail Repo Add Product To Cart Error: $e");
     }
   }
+
+  
 }

@@ -13,12 +13,44 @@ part 'cart_state.dart';
 class CartBloc extends Bloc<CartEvent, CartState> {
   CartBloc() : super(CartInitial()) {
     on<CartInitialEvent>(cartInitialEvent);
+    on<CartAddProductEvent>(cartAddProductEvent);
+    on<CartRemoveProductEvent>(cartRemoveProductEvent);
+    on<CartDeleteAllProductEvent>(cartDeleteAllProductEvent);
   }
   final cartRepo = CartRepo();
   FutureOr<void> cartInitialEvent(
       CartInitialEvent event, Emitter<CartState> emit) async {
     emit(CartLoadingState());
     final cartProducts = await cartRepo.fetchCartProducts();
-    emit(CartLoadedState(cartProducts: cartProducts));
+    cartProducts.isNotEmpty
+        ? emit(CartLoadedState(cartProducts: cartProducts))
+        : emit(CartEmptyState());
+  }
+
+  FutureOr<void> cartAddProductEvent(
+      CartAddProductEvent event, Emitter<CartState> emit) async {
+    await cartRepo.incrementCartItem(event.cartModel);
+    final cartProducts = await cartRepo.fetchCartProducts();
+    cartProducts.isNotEmpty
+        ? emit(CartLoadedState(cartProducts: cartProducts))
+        : emit(CartEmptyState());
+  }
+
+  FutureOr<void> cartRemoveProductEvent(
+      CartRemoveProductEvent event, Emitter<CartState> emit) async {
+    await cartRepo.decrementCartItem(event.cartModel);
+    final cartProducts = await cartRepo.fetchCartProducts();
+    cartProducts.isNotEmpty
+        ? emit(CartLoadedState(cartProducts: cartProducts))
+        : emit(CartEmptyState());
+  }
+
+  FutureOr<void> cartDeleteAllProductEvent(
+      CartDeleteAllProductEvent event, Emitter<CartState> emit) async {
+    await cartRepo.deleteAllCartItem(event.cartModel);
+    final cartProducts = await cartRepo.fetchCartProducts();
+    cartProducts.isNotEmpty
+        ? emit(CartLoadedState(cartProducts: cartProducts))
+        : emit(CartEmptyState());
   }
 }

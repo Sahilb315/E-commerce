@@ -13,7 +13,7 @@ class AuthStateChangesPage extends StatelessWidget {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return BottomNavigationPage();
+            return const BottomNavigationPage(index: 0);
           } else {
             return const LoginPage();
           }

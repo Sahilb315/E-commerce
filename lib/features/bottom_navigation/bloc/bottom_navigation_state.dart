@@ -4,9 +4,9 @@ part of 'bottom_navigation_bloc.dart';
 sealed class BottomNavigationState {
   final int tabIndex;
 
-   const BottomNavigationState({required this.tabIndex});
+  const BottomNavigationState({required this.tabIndex});
 }
 
-final class BottomNavigationInitial extends BottomNavigationState {
-  BottomNavigationInitial({required super.tabIndex});
+final class BottomNavigationInitialState extends BottomNavigationState {
+  const BottomNavigationInitialState({required super.tabIndex});
 }

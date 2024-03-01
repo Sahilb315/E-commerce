@@ -75,7 +75,7 @@ class _RegisterPageState extends State<RegisterPage> {
               context,
               PageRouteBuilder(
                 pageBuilder: (context, animation, secondaryAnimation) =>
-                    BottomNavigationPage(),
+                   const BottomNavigationPage(index: 0),
                 transitionsBuilder:
                     (context, animation, secondaryAnimation, child) {
                   var begin = const Offset(1.0, 0.0);

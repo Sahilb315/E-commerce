@@ -62,14 +62,13 @@ class _LoginPageState extends State<LoginPage> {
                 content: const Text("Fill out all fields"),
               ),
             );
-          } else if (state is LoginSuccessfulActionState){
-             Navigator.popUntil(
-                context, (route) => route == const LoginPage());
+          } else if (state is LoginSuccessfulActionState) {
+            Navigator.popUntil(context, (route) => route == const LoginPage());
             Navigator.push(
               context,
               PageRouteBuilder(
                 pageBuilder: (context, animation, secondaryAnimation) =>
-                    BottomNavigationPage(),
+                    const BottomNavigationPage(index: 0),
                 transitionsBuilder:
                     (context, animation, secondaryAnimation, child) {
                   var begin = const Offset(1.0, 0.0);

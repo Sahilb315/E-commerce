@@ -4,9 +4,12 @@ import 'package:flutter/material.dart';
 
 class CartTile extends StatelessWidget {
   final CartModel cartProduct;
+  final void Function() onDeleteAllTap;
+  final void Function() onDecrementTap;
+  final void Function() onIncrementTap;
   const CartTile({
     super.key,
-    required this.cartProduct,
+    required this.cartProduct, required this.onDeleteAllTap, required this.onDecrementTap, required this.onIncrementTap,
   });
 
   @override
@@ -15,9 +18,11 @@ class CartTile extends StatelessWidget {
       padding: const EdgeInsets.all(10.0),
       child: Container(
         decoration: BoxDecoration(
-          border: Border.all(),
+          border: Border.all(
+            color: Colors.grey.shade300,
+          ),
+          borderRadius: BorderRadius.circular(12),
         ),
-        // height: 100,
         child: Row(
           children: [
             Container(
@@ -52,8 +57,11 @@ class CartTile extends StatelessWidget {
                           ),
                         ),
                         IconButton(
-                          onPressed: () {},
-                          icon: const Icon(Icons.delete_outline_rounded),
+                          onPressed: onDeleteAllTap,
+                          icon: Icon(
+                            Icons.delete_outline_rounded,
+                            color: Colors.grey.shade600,
+                          ),
                         ),
                       ],
                     ),
@@ -65,7 +73,7 @@ class CartTile extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "\$${cartProduct.price.toString()}",
+                          "\$${cartProduct.price * cartProduct.totalItemCount}",
                           style: TextStyle(
                             color: AppColors.backgroundColor.withOpacity(0.7),
                             fontWeight: FontWeight.w900,
@@ -75,15 +83,19 @@ class CartTile extends StatelessWidget {
                         Row(
                           children: [
                             IconButton(
-                              onPressed: () {},
-                              icon: const Icon(
-                                  Icons.remove_circle_outline_rounded),
+                              onPressed: onDecrementTap,
+                              icon: Icon(
+                                Icons.remove_circle_outline_rounded,
+                                color: Colors.grey.shade600,
+                              ),
                             ),
                             Text(cartProduct.totalItemCount.toString()),
                             IconButton(
-                              onPressed: () {},
-                              icon:
-                                  const Icon(Icons.add_circle_outline_rounded),
+                              onPressed: onIncrementTap,
+                              icon: Icon(
+                                Icons.add_circle_outline_rounded,
+                                color: Colors.grey.shade600,
+                              ),
                             ),
                           ],
                         ),
