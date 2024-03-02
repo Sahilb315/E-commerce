@@ -9,6 +9,7 @@ import 'package:e_commerce_app/features/payment/ui/payment_page.dart';
 import 'package:e_commerce_app/features/product_detail/ui/widgets/custom_button.dart';
 import 'package:e_commerce_app/features/shipping/bloc/shipping_bloc.dart';
 import 'package:e_commerce_app/features/shipping/ui/pages/add_address_ship_page.dart';
+import 'package:e_commerce_app/helper/helper_functions.dart';
 import 'package:e_commerce_app/utils/theme/app_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -94,46 +95,14 @@ class _ShippingPageState extends State<ShippingPage> {
               ),
             );
           } else if (state is ShippingNavigateToAddNewAddressPageActionState) {
-            Navigator.pushReplacement(
+            HelperFunctions.pushReplacementNavigateToScreenUpDownAnimation(
               context,
-              PageRouteBuilder(
-                pageBuilder: (context, animation, secondaryAnimation) =>
-                    AddAdressShippingPage(),
-                transitionsBuilder:
-                    (context, animation, secondaryAnimation, child) {
-                  var begin = const Offset(0.0, 1.0);
-                  var end = Offset.zero;
-                  var curve = Curves.easeIn;
-
-                  var tween = Tween(begin: begin, end: end)
-                      .chain(CurveTween(curve: curve));
-                  return SlideTransition(
-                    position: animation.drive(tween),
-                    child: child,
-                  );
-                },
-              ),
+              AddAdressShippingPage(),
             );
           } else if (state is ShippingNavigateToPaymentPageActionState) {
-            Navigator.push(
+            HelperFunctions.navigateToScreenRightLeftAnimation(
               context,
-              PageRouteBuilder(
-                pageBuilder: (context, animation, secondaryAnimation) =>
-                    const PaymentPage(),
-                transitionsBuilder:
-                    (context, animation, secondaryAnimation, child) {
-                  var begin = const Offset(1.0, 0.0);
-                  var end = Offset.zero;
-                  var curve = Curves.easeIn;
-
-                  var tween = Tween(begin: begin, end: end)
-                      .chain(CurveTween(curve: curve));
-                  return SlideTransition(
-                    position: animation.drive(tween),
-                    child: child,
-                  );
-                },
-              ),
+              const PaymentPage(),
             );
           }
         },

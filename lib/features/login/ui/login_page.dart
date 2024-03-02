@@ -6,6 +6,7 @@ import 'package:e_commerce_app/features/bottom_navigation/ui/bottom_navigation.d
 import 'package:e_commerce_app/features/login/bloc/login_bloc.dart';
 import 'package:e_commerce_app/features/login/ui/widget/sign_in_button.dart';
 import 'package:e_commerce_app/features/register/ui/register_page.dart';
+import 'package:e_commerce_app/helper/helper_functions.dart';
 import 'package:e_commerce_app/utils/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -35,25 +36,9 @@ class _LoginPageState extends State<LoginPage> {
         buildWhen: (previous, current) => current is! LoginActionState,
         listener: (context, state) {
           if (state is LoginPageNavigateToRegisterPageActionState) {
-            Navigator.push(
+            HelperFunctions.navigateToScreenRightLeftAnimation(
               context,
-              PageRouteBuilder(
-                pageBuilder: (context, animation, secondaryAnimation) =>
-                    const RegisterPage(),
-                transitionsBuilder:
-                    (context, animation, secondaryAnimation, child) {
-                  var begin = const Offset(1.0, 0.0);
-                  var end = Offset.zero;
-                  var curve = Curves.easeIn;
-
-                  var tween = Tween(begin: begin, end: end)
-                      .chain(CurveTween(curve: curve));
-                  return SlideTransition(
-                    position: animation.drive(tween),
-                    child: child,
-                  );
-                },
-              ),
+              const RegisterPage(),
             );
           } else if (state is LoginInvalidInputActionState) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -64,25 +49,9 @@ class _LoginPageState extends State<LoginPage> {
             );
           } else if (state is LoginSuccessfulActionState) {
             Navigator.popUntil(context, (route) => route == const LoginPage());
-            Navigator.push(
+            HelperFunctions.navigateToScreenRightLeftAnimation(
               context,
-              PageRouteBuilder(
-                pageBuilder: (context, animation, secondaryAnimation) =>
-                    const BottomNavigationPage(index: 0),
-                transitionsBuilder:
-                    (context, animation, secondaryAnimation, child) {
-                  var begin = const Offset(1.0, 0.0);
-                  var end = Offset.zero;
-                  var curve = Curves.easeIn;
-
-                  var tween = Tween(begin: begin, end: end)
-                      .chain(CurveTween(curve: curve));
-                  return SlideTransition(
-                    position: animation.drive(tween),
-                    child: child,
-                  );
-                },
-              ),
+              const BottomNavigationPage(index: 0),
             );
           }
         },

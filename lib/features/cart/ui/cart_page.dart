@@ -8,6 +8,7 @@ import 'package:e_commerce_app/features/home/model/product_model.dart';
 import 'package:e_commerce_app/features/product_detail/ui/product_details_page.dart';
 import 'package:e_commerce_app/features/product_detail/ui/widgets/custom_button.dart';
 import 'package:e_commerce_app/features/shipping/ui/pages/shipping_page.dart';
+import 'package:e_commerce_app/helper/helper_functions.dart';
 import 'package:e_commerce_app/utils/theme/app_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -55,63 +56,29 @@ class _CartPageState extends State<CartPage> {
         bloc: cartBloc,
         listener: (context, state) {
           if (state is CartNavigateToProductDetailPageActionState) {
-            Navigator.push(
+            final cartModel = state.cartProduct;
+            HelperFunctions.navigateToScreenRightLeftAnimation(
               context,
-              PageRouteBuilder(
-                pageBuilder: (context, animation, secondaryAnimation) {
-                  final cartModel = state.cartProduct;
-                  return ProductDetailsPage(
-                    productModel: ProductModel(
-                      stars: cartModel.stars,
-                      price: cartModel.price,
-                      listPrice: cartModel.listPrice,
-                      title: cartModel.title,
-                      imgUrl: cartModel.imgUrl,
-                      category_id: cartModel.category_id,
-                      boughtInLastMonth: cartModel.boughtInLastMonth,
-                      productURL: cartModel.productURL,
-                      reviews: cartModel.reviews,
-                      isBestSeller: cartModel.isBestSeller,
-                      asin: cartModel.asin,
-                    ),
-                  );
-                },
-                transitionsBuilder:
-                    (context, animation, secondaryAnimation, child) {
-                  var begin = const Offset(1.0, 0.0);
-                  var end = Offset.zero;
-                  var curve = Curves.easeIn;
-
-                  var tween = Tween(begin: begin, end: end)
-                      .chain(CurveTween(curve: curve));
-                  return SlideTransition(
-                    position: animation.drive(tween),
-                    child: child,
-                  );
-                },
+              ProductDetailsPage(
+                productModel: ProductModel(
+                  stars: cartModel.stars,
+                  price: cartModel.price,
+                  listPrice: cartModel.listPrice,
+                  title: cartModel.title,
+                  imgUrl: cartModel.imgUrl,
+                  category_id: cartModel.category_id,
+                  boughtInLastMonth: cartModel.boughtInLastMonth,
+                  productURL: cartModel.productURL,
+                  reviews: cartModel.reviews,
+                  isBestSeller: cartModel.isBestSeller,
+                  asin: cartModel.asin,
+                ),
               ),
             );
           } else if (state is CartNavigateToShippingPageActionState) {
-            Navigator.push(
+            HelperFunctions.navigateToScreenRightLeftAnimation(
               context,
-              PageRouteBuilder(
-                pageBuilder: (context, animation, secondaryAnimation) {
-                  return const ShippingPage();
-                },
-                transitionsBuilder:
-                    (context, animation, secondaryAnimation, child) {
-                  var begin = const Offset(1.0, 0.0);
-                  var end = Offset.zero;
-                  var curve = Curves.easeIn;
-
-                  var tween = Tween(begin: begin, end: end)
-                      .chain(CurveTween(curve: curve));
-                  return SlideTransition(
-                    position: animation.drive(tween),
-                    child: child,
-                  );
-                },
-              ),
+              const ShippingPage(),
             );
           }
         },

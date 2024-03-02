@@ -6,6 +6,7 @@ import 'package:e_commerce_app/features/home/model/product_model.dart';
 import 'package:e_commerce_app/features/home/ui/widgets/banner_view.dart';
 import 'package:e_commerce_app/features/home/ui/widgets/product_tile.dart';
 import 'package:e_commerce_app/features/product_detail/ui/product_details_page.dart';
+import 'package:e_commerce_app/helper/helper_functions.dart';
 import 'package:e_commerce_app/utils/theme/app_colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -43,47 +44,16 @@ class _HomePageState extends State<HomePage> {
         buildWhen: (previous, current) => current is! HomeActionState,
         listener: (context, state) {
           if (state is HomeNavigateToFavouritePageActionState) {
-            Navigator.push(
+            HelperFunctions.navigateToScreenRightLeftAnimation(
               context,
-              PageRouteBuilder(
-                pageBuilder: (context, animation, secondaryAnimation) =>
-                    const FavouritePage(),
-                transitionsBuilder:
-                    (context, animation, secondaryAnimation, child) {
-                  var begin = const Offset(1.0, 0.0);
-                  var end = Offset.zero;
-                  var curve = Curves.easeIn;
-
-                  var tween = Tween(begin: begin, end: end)
-                      .chain(CurveTween(curve: curve));
-                  return SlideTransition(
-                    position: animation.drive(tween),
-                    child: child,
-                  );
-                },
-              ),
+              const FavouritePage(),
             );
           } else if (state is HomeNavigateToProductPageActionState) {
-            Navigator.push(
+          
+            HelperFunctions.navigateToScreenRightLeftAnimation(
               context,
-              PageRouteBuilder(
-                pageBuilder: (context, animation, secondaryAnimation) =>
-                    ProductDetailsPage(
-                  productModel: state.productModel,
-                ),
-                transitionsBuilder:
-                    (context, animation, secondaryAnimation, child) {
-                  var begin = const Offset(1.0, 0.0);
-                  var end = Offset.zero;
-                  var curve = Curves.easeIn;
-
-                  var tween = Tween(begin: begin, end: end)
-                      .chain(CurveTween(curve: curve));
-                  return SlideTransition(
-                    position: animation.drive(tween),
-                    child: child,
-                  );
-                },
+              ProductDetailsPage(
+                productModel: state.productModel,
               ),
             );
           }

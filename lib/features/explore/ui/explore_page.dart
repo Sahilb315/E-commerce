@@ -8,6 +8,7 @@ import 'package:e_commerce_app/features/explore/ui/widgets/women_category.dart';
 import 'package:e_commerce_app/features/favourite/ui/favourite_page.dart';
 import 'package:e_commerce_app/features/product_category/ui/product_category_page.dart';
 import 'package:e_commerce_app/features/search/ui/search_page.dart';
+import 'package:e_commerce_app/helper/helper_functions.dart';
 import 'package:e_commerce_app/utils/theme/app_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -31,74 +32,24 @@ class _ExplorePageState extends State<ExplorePage> {
         listenWhen: (previous, current) => current is ExploreActionState,
         listener: (context, state) {
           if (state is ExploreNavigateToProductCategoryPageActionState) {
-            Navigator.push(
+            HelperFunctions.navigateToScreenRightLeftAnimation(
               context,
-              PageRouteBuilder(
-                pageBuilder: (context, animation, secondaryAnimation) =>
-                    ProductCategoryPage(
-                  categoryName: state.categoryName,
-                  categoryId: state.categoryId,
-                ),
-                transitionsBuilder:
-                    (context, animation, secondaryAnimation, child) {
-                  var begin = const Offset(1.0, 0.0);
-                  var end = Offset.zero;
-                  var curve = Curves.easeIn;
-
-                  var tween = Tween(begin: begin, end: end)
-                      .chain(CurveTween(curve: curve));
-                  return SlideTransition(
-                    position: animation.drive(tween),
-                    child: child,
-                  );
-                },
+              ProductCategoryPage(
+                categoryName: state.categoryName,
+                categoryId: state.categoryId,
               ),
             );
           } else if (state is ExploreNavigateToSearchPageActionState) {
-            Navigator.push(
+            HelperFunctions.pushNavigateToScreenLeftRightAnimation(
               context,
-              PageRouteBuilder(
-                pageBuilder: (context, animation, secondaryAnimation) =>
-                    SearchPage(
-                  products: state.products,
-                ),
-                transitionDuration: const Duration(milliseconds: 150),
-                transitionsBuilder:
-                    (context, animation, secondaryAnimation, child) {
-                  var begin = const Offset(-1.0, 0.0);
-                  var end = Offset.zero;
-                  var curve = Curves.easeIn;
-
-                  var tween = Tween(begin: begin, end: end)
-                      .chain(CurveTween(curve: curve));
-                  return SlideTransition(
-                    position: animation.drive(tween),
-                    child: child,
-                  );
-                },
+              SearchPage(
+                products: state.products,
               ),
             );
           } else if (state is ExploreNavigateToFavPageActionState) {
-            Navigator.push(
+            HelperFunctions.navigateToScreenRightLeftAnimation(
               context,
-              PageRouteBuilder(
-                pageBuilder: (context, animation, secondaryAnimation) =>
-                    const FavouritePage(),
-                transitionDuration: const Duration(milliseconds: 150),
-                transitionsBuilder:
-                    (context, animation, secondaryAnimation, child) {
-                  var begin = const Offset(1.0, 0.0);
-                  var end = Offset.zero;
-                  var curve = Curves.easeIn;
-
-                  var tween = Tween(begin: begin, end: end)
-                      .chain(CurveTween(curve: curve));
-                  return SlideTransition(
-                    position: animation.drive(tween),
-                    child: child,
-                  );
-                },
-              ),
+              const FavouritePage(),
             );
           }
         },

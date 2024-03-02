@@ -8,6 +8,7 @@ import 'package:e_commerce_app/features/home/model/product_model.dart';
 import 'package:e_commerce_app/features/home/repo/home_repo.dart';
 import 'package:e_commerce_app/features/product_detail/bloc/product_detail_bloc.dart';
 import 'package:e_commerce_app/features/product_detail/ui/widgets/custom_button.dart';
+import 'package:e_commerce_app/helper/helper_functions.dart';
 import 'package:e_commerce_app/utils/theme/app_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -89,28 +90,12 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
               cartPriceTotal += element.price * productQuantity;
             }
             productAddedBottomSheet(context, itemsInCart, cartPriceTotal);
-
           } else if (state is ProductDetailNavigateToCartPageActionState) {
             Navigator.pop(context);
-            Navigator.push(
-              context,
-              PageRouteBuilder(
-                pageBuilder: (context, animation, secondaryAnimation) =>
-                    const BottomNavigationPage(index: 2),
-                transitionsBuilder:
-                    (context, animation, secondaryAnimation, child) {
-                  var begin = const Offset(1.0, 0.0);
-                  var end = Offset.zero;
-                  var curve = Curves.easeIn;
 
-                  var tween = Tween(begin: begin, end: end)
-                      .chain(CurveTween(curve: curve));
-                  return SlideTransition(
-                    position: animation.drive(tween),
-                    child: child,
-                  );
-                },
-              ),
+            HelperFunctions.navigateToScreenRightLeftAnimation(
+              context,
+              const BottomNavigationPage(index: 2),
             );
           }
         },

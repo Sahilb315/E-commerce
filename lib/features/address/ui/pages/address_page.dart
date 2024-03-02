@@ -6,6 +6,7 @@ import 'package:e_commerce_app/features/address/ui/pages/add_address_account_pag
 import 'package:e_commerce_app/features/address/ui/widget/address_text_field.dart';
 import 'package:e_commerce_app/features/address/ui/widget/address_tile.dart';
 import 'package:e_commerce_app/features/product_detail/ui/widgets/custom_button.dart';
+import 'package:e_commerce_app/helper/helper_functions.dart';
 import 'package:e_commerce_app/utils/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -61,25 +62,9 @@ class _AddressPageState extends State<AddressPage> {
         buildWhen: (previous, current) => current is! AddressActionState,
         listener: (context, state) {
           if (state is AddressNavigateToAddAddressPageActionState) {
-            Navigator.pushReplacement(
+            HelperFunctions.pushReplacementNavigateToScreenUpDownAnimation(
               context,
-              PageRouteBuilder(
-                pageBuilder: (context, animation, secondaryAnimation) =>
-                    AddAddressAccountPage(),
-                transitionsBuilder:
-                    (context, animation, secondaryAnimation, child) {
-                  var begin = const Offset(0.0, 1.0);
-                  var end = Offset.zero;
-                  var curve = Curves.easeIn;
-
-                  var tween = Tween(begin: begin, end: end)
-                      .chain(CurveTween(curve: curve));
-                  return SlideTransition(
-                    position: animation.drive(tween),
-                    child: child,
-                  );
-                },
-              ),
+              AddAddressAccountPage(),
             );
           } else if (state is AddressEditAddressBottomSheetActionState) {
             final address = state.address;

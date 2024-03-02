@@ -4,6 +4,7 @@ import 'package:e_commerce_app/features/home/model/product_model.dart';
 import 'package:e_commerce_app/features/home/ui/widgets/product_tile.dart';
 import 'package:e_commerce_app/features/product_detail/ui/product_details_page.dart';
 import 'package:e_commerce_app/features/search/bloc/search_bloc.dart';
+import 'package:e_commerce_app/helper/helper_functions.dart';
 import 'package:e_commerce_app/utils/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -86,27 +87,9 @@ class SearchPage extends StatelessWidget {
         buildWhen: (previous, current) => current is! SearchActionState,
         listener: (context, state) {
           if (state is SearchNavigateToProductDetailsPageActionState) {
-            Navigator.push(
+            HelperFunctions.navigateToScreenRightLeftAnimation(
               context,
-              PageRouteBuilder(
-                pageBuilder: (context, animation, secondaryAnimation) =>
-                    ProductDetailsPage(
-                  productModel: state.product,
-                ),
-                transitionsBuilder:
-                    (context, animation, secondaryAnimation, child) {
-                  var begin = const Offset(1.0, 0.0);
-                  var end = Offset.zero;
-                  var curve = Curves.easeIn;
-
-                  var tween = Tween(begin: begin, end: end)
-                      .chain(CurveTween(curve: curve));
-                  return SlideTransition(
-                    position: animation.drive(tween),
-                    child: child,
-                  );
-                },
-              ),
+              ProductDetailsPage(productModel: state.product),
             );
           }
         },
