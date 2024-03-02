@@ -1,7 +1,7 @@
 import 'package:e_commerce_app/features/account/bloc/account_bloc.dart';
 import 'package:e_commerce_app/features/address/ui/pages/address_page.dart';
 import 'package:e_commerce_app/features/orders/ui/order_page.dart';
-import 'package:e_commerce_app/features/payment/ui/payment_page.dart';
+import 'package:e_commerce_app/features/payment/ui/pages/payment_page.dart';
 import 'package:e_commerce_app/features/profile/ui/profile_page.dart';
 import 'package:e_commerce_app/helper/helper_functions.dart';
 import 'package:e_commerce_app/utils/theme/app_colors.dart';
@@ -47,7 +47,7 @@ class _AccountPageState extends State<AccountPage> {
           } else if (state is AccountNavigateToPaymentPageActionState) {
             HelperFunctions.navigateToScreenRightLeftAnimation(
               context,
-              const PaymentPage(),
+               PaymentPage(),
             );
           } else if (state is AccountNavigateToProfilePageActionState) {
             HelperFunctions.navigateToScreenRightLeftAnimation(

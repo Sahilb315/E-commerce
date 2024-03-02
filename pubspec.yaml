@@ -48,6 +48,7 @@ dependencies:
   iconsax: ^0.0.8
   flutter_svg: ^2.0.10+1
   google_fonts: ^6.1.0
+  flutter_credit_card: ^4.0.1
 
 
 dev_dependencies:
