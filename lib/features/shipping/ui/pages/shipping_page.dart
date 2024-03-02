@@ -5,7 +5,7 @@ import 'dart:developer';
 import 'package:e_commerce_app/features/address/model/address_model.dart';
 import 'package:e_commerce_app/features/address/ui/widget/address_text_field.dart';
 import 'package:e_commerce_app/features/address/ui/widget/address_tile.dart';
-import 'package:e_commerce_app/features/payment/ui/pages/payment_page.dart';
+import 'package:e_commerce_app/features/order_payment/ui/order_payment_page.dart';
 import 'package:e_commerce_app/features/product_detail/ui/widgets/custom_button.dart';
 import 'package:e_commerce_app/features/shipping/bloc/shipping_bloc.dart';
 import 'package:e_commerce_app/features/shipping/ui/pages/add_address_ship_page.dart';
@@ -102,7 +102,7 @@ class _ShippingPageState extends State<ShippingPage> {
           } else if (state is ShippingNavigateToPaymentPageActionState) {
             HelperFunctions.navigateToScreenRightLeftAnimation(
               context,
-               PaymentPage(),
+              OrderPaymentPage(),
             );
           }
         },

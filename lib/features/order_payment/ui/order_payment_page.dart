@@ -1,15 +1,15 @@
-import 'package:e_commerce_app/features/payment/bloc/payment_bloc.dart';
-import 'package:e_commerce_app/features/credit_debit_card/ui/pages/credit_debit_page.dart';
+import 'package:e_commerce_app/features/credit_debit_card/ui/pages/order_payment_pages/order_cards_page.dart';
+import 'package:e_commerce_app/features/order_payment/bloc/payment_order_bloc.dart';
 import 'package:e_commerce_app/helper/helper_functions.dart';
 import 'package:e_commerce_app/utils/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 
-class PaymentPage extends StatelessWidget {
-  PaymentPage({super.key});
+class OrderPaymentPage extends StatelessWidget {
+  OrderPaymentPage({super.key});
 
-  final paymentBloc = PaymentBloc();
+  final paymentBloc = PaymentOrderBloc();
 
   @override
   Widget build(BuildContext context) {
@@ -22,23 +22,24 @@ class PaymentPage extends StatelessWidget {
           style: MyTextThemes.myTextTheme().titleMedium,
         ),
       ),
-      body: BlocListener<PaymentBloc, PaymentState>(
+      body: BlocListener<PaymentOrderBloc, PaymentOrderState>(
         bloc: paymentBloc,
-        listenWhen: (previous, current) => current is PaymentActionState,
+        listenWhen: (previous, current) => current is PaymentActionOrderState,
         listener: (context, state) {
-          if (state is PaymentNavigateToCreditDebitPageActionState) {
+          if (state is PaymentNavigateToCreditDebitPageOrderActionState) {
             HelperFunctions.navigateToScreenRightLeftAnimation(
               context,
-             const CreditDebitPage(),
+              const CardsPaymentPage(),
             );
-          } else if (state is PaymentNavigateToGooglePayPageActionState) {
-          } else if (state is PaymentNavigateToCashOnDeliveryPageActionState) {}
+          } else if (state is PaymentNavigateToGooglePayPageOrderActionState) {
+          } else if (state
+              is PaymentNavigateToCashOnDeliveryPageOrderActionState) {}
         },
         child: Column(
           children: [
             ListTile(
               onTap: () {
-                paymentBloc.add(PaymentNavigateToCreditDebitPageEvent());
+                paymentBloc.add(PaymentNavigateToCreditDebitPageOrderEvent());
               },
               leading: SvgPicture.asset(
                 "assets/payment/card.svg",

@@ -23,4 +23,5 @@ class CreditDebitNavigateToAddNewCardPageActionState
 class CreditDebitCardAddedSuccessfullyActionState
     extends CreditDebitCardActionState {}
 
-class CreditDebitCardEmptyFieldActionState extends CreditDebitCardActionState {}
+    class CreditDebitCardEmptyFieldActionState
+    extends CreditDebitCardActionState {}

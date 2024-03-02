@@ -1,11 +1,11 @@
 part of 'payment_bloc.dart';
 
 @immutable
-sealed class PaymentState {}
+sealed class PaymentAccountState {}
 
-abstract class PaymentActionState extends PaymentState {}
+abstract class PaymentActionState extends PaymentAccountState {}
 
-final class PaymentInitial extends PaymentState {}
+final class PaymentInitial extends PaymentAccountState {}
 
 class PaymentNavigateToCreditDebitPageActionState extends PaymentActionState {}
 

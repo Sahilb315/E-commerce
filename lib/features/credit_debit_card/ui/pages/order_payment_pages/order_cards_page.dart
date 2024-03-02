@@ -2,6 +2,7 @@
 
 import 'package:e_commerce_app/features/credit_debit_card/bloc/credit_debit_card_bloc.dart';
 import 'package:e_commerce_app/features/credit_debit_card/ui/pages/add_credit_debit_card_page.dart';
+import 'package:e_commerce_app/features/product_detail/ui/widgets/custom_button.dart';
 import 'package:e_commerce_app/helper/helper_functions.dart';
 import 'package:e_commerce_app/utils/theme/app_colors.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,14 +10,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
 
-class CreditDebitPage extends StatefulWidget {
-  const CreditDebitPage({super.key});
+class CardsPaymentPage extends StatefulWidget {
+  const CardsPaymentPage({super.key});
 
   @override
-  State<CreditDebitPage> createState() => _CreditDebitPageState();
+  State<CardsPaymentPage> createState() => _CardsPaymentPageState();
 }
 
-class _CreditDebitPageState extends State<CreditDebitPage> {
+class _CardsPaymentPageState extends State<CardsPaymentPage> {
   final cardBloc = CreditDebitCardBloc();
 
   @override
@@ -30,8 +31,8 @@ class _CreditDebitPageState extends State<CreditDebitPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
         surfaceTintColor: Colors.white,
+        backgroundColor: Colors.white,
         title: Text(
           "Your Cards",
           style: MyTextThemes.myTextTheme().titleMedium,
@@ -52,6 +53,21 @@ class _CreditDebitPageState extends State<CreditDebitPage> {
             ),
           ),
         ],
+      ),
+      bottomNavigationBar: Container(
+        height: MediaQuery.sizeOf(context).height * 0.1,
+        color: Colors.transparent,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 10),
+          child: Column(
+            children: [
+              CustomButton(
+                heading: "Proceed",
+                onTap: () {},
+              ),
+            ],
+          ),
+        ),
       ),
       body: BlocConsumer<CreditDebitCardBloc, CreditDebitCardState>(
         bloc: cardBloc,
