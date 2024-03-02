@@ -16,6 +16,9 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     on<CartAddProductEvent>(cartAddProductEvent);
     on<CartRemoveProductEvent>(cartRemoveProductEvent);
     on<CartDeleteAllProductEvent>(cartDeleteAllProductEvent);
+    on<CartNavigateToProductDetailsPageEvent>(
+        cartNavigateToProductDetailsPageEvent);
+    on<CartNavigateToShippingPageEvent>(cartNavigateToShippingPageEvent);
   }
   final cartRepo = CartRepo();
   FutureOr<void> cartInitialEvent(
@@ -52,5 +55,18 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     cartProducts.isNotEmpty
         ? emit(CartLoadedState(cartProducts: cartProducts))
         : emit(CartEmptyState());
+  }
+
+  FutureOr<void> cartNavigateToProductDetailsPageEvent(
+      CartNavigateToProductDetailsPageEvent event, Emitter<CartState> emit) {
+    emit(CartNavigateToProductDetailPageActionState(
+      cartProduct: event.cartProduct,
+    ));
+  }
+
+  FutureOr<void> cartNavigateToShippingPageEvent(
+      CartNavigateToShippingPageEvent event, Emitter<CartState> emit) {
+    emit(CartNavigateToShippingPageActionState(
+        cartProducts: event.cartProducts));
   }
 }

@@ -4,11 +4,13 @@ import 'package:e_commerce_app/features/bottom_navigation/ui/bottom_navigation.d
 import 'package:e_commerce_app/features/cart/bloc/cart_bloc.dart';
 import 'package:e_commerce_app/features/cart/model/cart_model.dart';
 import 'package:e_commerce_app/features/cart/ui/widgets/cart_tile.dart';
+import 'package:e_commerce_app/features/home/model/product_model.dart';
+import 'package:e_commerce_app/features/product_detail/ui/product_details_page.dart';
 import 'package:e_commerce_app/features/product_detail/ui/widgets/custom_button.dart';
+import 'package:e_commerce_app/features/shipping/ui/pages/shipping_page.dart';
 import 'package:e_commerce_app/utils/theme/app_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -48,8 +50,71 @@ class _CartPageState extends State<CartPage> {
       ),
       backgroundColor: Colors.white,
       body: BlocConsumer<CartBloc, CartState>(
+        listenWhen: (previous, current) => current is CartActionState,
+        buildWhen: (previous, current) => current is! CartActionState,
         bloc: cartBloc,
-        listener: (context, state) {},
+        listener: (context, state) {
+          if (state is CartNavigateToProductDetailPageActionState) {
+            Navigator.push(
+              context,
+              PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) {
+                  final cartModel = state.cartProduct;
+                  return ProductDetailsPage(
+                    productModel: ProductModel(
+                      stars: cartModel.stars,
+                      price: cartModel.price,
+                      listPrice: cartModel.listPrice,
+                      title: cartModel.title,
+                      imgUrl: cartModel.imgUrl,
+                      category_id: cartModel.category_id,
+                      boughtInLastMonth: cartModel.boughtInLastMonth,
+                      productURL: cartModel.productURL,
+                      reviews: cartModel.reviews,
+                      isBestSeller: cartModel.isBestSeller,
+                      asin: cartModel.asin,
+                    ),
+                  );
+                },
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) {
+                  var begin = const Offset(1.0, 0.0);
+                  var end = Offset.zero;
+                  var curve = Curves.easeIn;
+
+                  var tween = Tween(begin: begin, end: end)
+                      .chain(CurveTween(curve: curve));
+                  return SlideTransition(
+                    position: animation.drive(tween),
+                    child: child,
+                  );
+                },
+              ),
+            );
+          } else if (state is CartNavigateToShippingPageActionState) {
+            Navigator.push(
+              context,
+              PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) {
+                  return const ShippingPage();
+                },
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) {
+                  var begin = const Offset(1.0, 0.0);
+                  var end = Offset.zero;
+                  var curve = Curves.easeIn;
+
+                  var tween = Tween(begin: begin, end: end)
+                      .chain(CurveTween(curve: curve));
+                  return SlideTransition(
+                    position: animation.drive(tween),
+                    child: child,
+                  );
+                },
+              ),
+            );
+          }
+        },
         builder: (context, state) {
           switch (state.runtimeType) {
             case CartLoadingState:
@@ -130,10 +195,11 @@ class _CartPageState extends State<CartPage> {
             case CartLoadedState:
               final successState = state as CartLoadedState;
               List<CartModel> cartProducts = successState.cartProducts;
-              double itemsTotal = 0;
+              double itemsPriceTotal = 0;
+              int productQuantity = 1;
               for (var i = 0; i < cartProducts.length; i++) {
-                int productQuantity = cartProducts[i].totalItemCount!;
-                itemsTotal += cartProducts[i].price * productQuantity;
+                productQuantity = cartProducts[i].totalItemCount!;
+                itemsPriceTotal += cartProducts[i].price * productQuantity;
               }
               return Column(
                 children: [
@@ -144,6 +210,13 @@ class _CartPageState extends State<CartPage> {
                       itemBuilder: (context, index) {
                         return CartTile(
                           cartProduct: cartProducts[index],
+                          onTileTap: () {
+                            cartBloc.add(
+                              CartNavigateToProductDetailsPageEvent(
+                                cartProduct: cartProducts[index],
+                              ),
+                            );
+                          },
                           onDecrementTap: () {
                             cartBloc.add(CartRemoveProductEvent(
                               cartModel: cartProducts[index],
@@ -221,7 +294,7 @@ class _CartPageState extends State<CartPage> {
                           width: double.maxFinite,
                           decoration: BoxDecoration(
                             border: Border.all(color: AppColors.gray400),
-                            borderRadius: BorderRadius.circular(6),
+                            borderRadius: BorderRadius.circular(10),
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -235,7 +308,7 @@ class _CartPageState extends State<CartPage> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      "Items(3)",
+                                      "Items($productQuantity)",
                                       style: TextStyle(
                                         color: AppColors.blueGray300,
                                         fontSize: 15,
@@ -244,7 +317,7 @@ class _CartPageState extends State<CartPage> {
                                       ),
                                     ),
                                     Text(
-                                      "\$$itemsTotal",
+                                      "\$$itemsPriceTotal",
                                       style:
                                           MyTextThemes.myTextTheme().labelSmall,
                                     ),
@@ -319,7 +392,7 @@ class _CartPageState extends State<CartPage> {
                                       ),
                                     ),
                                     Text(
-                                      "\$${itemsTotal + 40 + 116}",
+                                      "\$${(itemsPriceTotal + 40 + 116).round()}.00",
                                       style: TextStyle(
                                         color: MyColorSchemes
                                             .primaryColorScheme.primary
@@ -340,7 +413,11 @@ class _CartPageState extends State<CartPage> {
                         ),
                         CustomButton(
                           heading: "Check out",
-                          onTap: () {},
+                          onTap: () {
+                            cartBloc.add(CartNavigateToShippingPageEvent(
+                              cartProducts: cartProducts,
+                            ));
+                          },
                         ),
                       ],
                     ),

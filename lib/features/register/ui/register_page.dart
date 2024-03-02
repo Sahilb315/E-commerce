@@ -177,6 +177,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           RegisterButtonClickedEvent(
                             password: _passwordController.text,
                             user: UserModel(
+                              addressList: [],
                               fullName: _usernameController.text,
                               email: _emailController.text,
                               profilePic:

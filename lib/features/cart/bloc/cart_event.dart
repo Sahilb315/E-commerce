@@ -23,4 +23,14 @@ class CartDeleteAllProductEvent extends CartEvent {
   CartDeleteAllProductEvent({required this.cartModel});
 }
 
-class CartNavigateToProductDetailsPageEvent extends CartEvent {}
+class CartNavigateToProductDetailsPageEvent extends CartEvent {
+  final CartModel cartProduct;
+
+  CartNavigateToProductDetailsPageEvent({required this.cartProduct});
+}
+
+class CartNavigateToShippingPageEvent extends CartEvent {
+  final List<CartModel> cartProducts;
+
+  CartNavigateToShippingPageEvent({required this.cartProducts});
+}

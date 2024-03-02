@@ -113,8 +113,8 @@ class _HomeBannerViewState extends State<HomeBannerView> {
               effect: WormEffect(
                 dotColor: AppColors.blueGray300.withOpacity(0.5),
                 activeDotColor: AppColors.backgroundColor.withOpacity(0.6),
-                dotHeight: 10,
-                dotWidth: 10,
+                dotHeight: 4,
+                dotWidth: 15,
               ),
               controller: pageController,
               count: 3,

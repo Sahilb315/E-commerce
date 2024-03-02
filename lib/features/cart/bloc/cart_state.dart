@@ -18,3 +18,15 @@ class CartLoadedState extends CartState {
 class CartErrorState extends CartState {}
 
 class CartEmptyState extends CartState {}
+
+class CartNavigateToProductDetailPageActionState extends CartActionState {
+  final CartModel cartProduct;
+
+  CartNavigateToProductDetailPageActionState({required this.cartProduct});
+}
+
+class CartNavigateToShippingPageActionState extends CartActionState {
+  final List<CartModel> cartProducts;
+
+  CartNavigateToShippingPageActionState({required this.cartProducts});
+}

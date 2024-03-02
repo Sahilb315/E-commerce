@@ -2,6 +2,8 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+
+import 'package:e_commerce_app/features/address/model/address_model.dart';
 import 'package:e_commerce_app/features/home/model/product_model.dart';
 
 class UserModel {
@@ -11,6 +13,7 @@ class UserModel {
   final String fullName;
   final String phoneNumber;
   final String profilePic;
+  final List<AddressModel> addressList;
   UserModel({
     required this.email,
     required this.favProducts,
@@ -18,6 +21,7 @@ class UserModel {
     required this.fullName,
     required this.phoneNumber,
     required this.profilePic,
+    required this.addressList,
   });
 
   UserModel copyWith({
@@ -27,6 +31,7 @@ class UserModel {
     String? fullName,
     String? phoneNumber,
     String? profilePic,
+    List<AddressModel>? addressList,
   }) {
     return UserModel(
       email: email ?? this.email,
@@ -35,6 +40,7 @@ class UserModel {
       fullName: fullName ?? this.fullName,
       phoneNumber: phoneNumber ?? this.phoneNumber,
       profilePic: profilePic ?? this.profilePic,
+      addressList: addressList ?? this.addressList,
     );
   }
 
@@ -46,6 +52,7 @@ class UserModel {
       'fullName': fullName,
       'phoneNumber': phoneNumber,
       'profilePic': profilePic,
+      'addressList': addressList.map((x) => x.toMap()).toList(),
     };
   }
 
@@ -57,6 +64,7 @@ class UserModel {
       fullName: map['fullName'] as String,
       phoneNumber: map['phoneNumber'] as String,
       profilePic: map['profilePic'] as String,
+      addressList: List<AddressModel>.from((map['addressList'] as List<int>).map<AddressModel>((x) => AddressModel.fromMap(x as Map<String,dynamic>),),),
     );
   }
 
@@ -66,7 +74,7 @@ class UserModel {
 
   @override
   String toString() {
-    return 'UserModel(email: $email, favProducts: $favProducts, cartItems: $cartItems, fullName: $fullName, phoneNumber: $phoneNumber, profilePic: $profilePic)';
+    return 'UserModel(email: $email, favProducts: $favProducts, cartItems: $cartItems, fullName: $fullName, phoneNumber: $phoneNumber, profilePic: $profilePic, addressList: $addressList)';
   }
 
   @override
@@ -79,7 +87,8 @@ class UserModel {
       listEquals(other.cartItems, cartItems) &&
       other.fullName == fullName &&
       other.phoneNumber == phoneNumber &&
-      other.profilePic == profilePic;
+      other.profilePic == profilePic &&
+      listEquals(other.addressList, addressList);
   }
 
   @override
@@ -89,6 +98,7 @@ class UserModel {
       cartItems.hashCode ^
       fullName.hashCode ^
       phoneNumber.hashCode ^
-      profilePic.hashCode;
+      profilePic.hashCode ^
+      addressList.hashCode;
   }
 }

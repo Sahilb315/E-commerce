@@ -7,6 +7,8 @@ import 'package:e_commerce_app/features/search/bloc/search_bloc.dart';
 import 'package:e_commerce_app/utils/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class SearchPage extends StatelessWidget {
   final List<ProductModel> products;
@@ -147,14 +149,20 @@ class SearchPage extends StatelessWidget {
                 ),
               );
             case SearchNoResultsFoundState:
-              return const Center(
+              return Center(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    SvgPicture.asset(
+                      "assets/cross.svg",
+                      height: 80,
+                    ),
                     Text(
-                      "No results found",
-                      style: TextStyle(),
+                      "Product Not Found",
+                      style: GoogleFonts.montserrat(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 18,
+                      ),
                     ),
                   ],
                 ),

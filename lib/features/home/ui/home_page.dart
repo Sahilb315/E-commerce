@@ -1,5 +1,4 @@
 // ignore_for_file: type_literal_in_constant_pattern
-import 'dart:developer';
 
 import 'package:e_commerce_app/features/favourite/ui/favourite_page.dart';
 import 'package:e_commerce_app/features/home/bloc/home_bloc.dart';
@@ -122,10 +121,7 @@ class _HomePageState extends State<HomePage> {
                             child: Row(
                               children: [
                                 Padding(
-                                  padding: const EdgeInsets.only(
-                                    right: 24.0,
-                                    left: 10,
-                                  ),
+                                  padding: const EdgeInsets.only(left: 8),
                                   child: Text(
                                     "Shop Vista",
                                     textAlign: TextAlign.left,
@@ -134,6 +130,7 @@ class _HomePageState extends State<HomePage> {
                                           .withOpacity(0.8),
                                       fontSize: 22,
                                       fontWeight: FontWeight.w400,
+                                      fontFamily: "Poppins",
                                     ),
                                   ),
                                 ),
@@ -213,7 +210,6 @@ class _HomePageState extends State<HomePage> {
                                   scrollDirection: Axis.horizontal,
                                   itemCount: bestSellerProducts.length,
                                   itemBuilder: (context, index) {
-                                    log(bestSellerProducts.length.toString());
                                     return Padding(
                                       padding: const EdgeInsets.only(
                                         left: 10.0,
