@@ -32,6 +32,8 @@ class _CartPageState extends State<CartPage> {
     super.initState();
   }
 
+  double itemsPriceTotal = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,6 +78,7 @@ class _CartPageState extends State<CartPage> {
               ),
             );
           } else if (state is CartNavigateToShippingPageActionState) {
+            // final cartProducts = state.cartProducts;
             HelperFunctions.navigateToScreenRightLeftAnimation(
               context,
               const ShippingPage(),
@@ -162,10 +165,10 @@ class _CartPageState extends State<CartPage> {
             case CartLoadedState:
               final successState = state as CartLoadedState;
               List<CartModel> cartProducts = successState.cartProducts;
-              double itemsPriceTotal = 0;
-              int productQuantity = 1;
+              // double itemsPriceTotal = 0;
+              int productQuantity = 0;
               for (var i = 0; i < cartProducts.length; i++) {
-                productQuantity = cartProducts[i].totalItemCount!;
+                productQuantity += cartProducts[i].totalItemCount!;
                 itemsPriceTotal += cartProducts[i].price * productQuantity;
               }
               return Column(

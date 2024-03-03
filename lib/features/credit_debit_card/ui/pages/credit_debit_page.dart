@@ -104,7 +104,7 @@ class _CreditDebitPageState extends State<CreditDebitPage> {
                                 expiryDate: cardsList[index].expiryDate,
                                 cardHolderName: cardsList[index].cardHolderName,
                                 cvvCode: cardsList[index].cvvCode,
-                                showBackView: true,
+                                showBackView: false,
                                 onCreditCardWidgetChange: (creditCardModel) {},
                                 bankName: cardsList[index].bankName,
                                 isHolderNameVisible: true,

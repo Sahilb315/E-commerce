@@ -1,7 +1,6 @@
 import 'package:e_commerce_app/utils/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
-
 class CustomButton extends StatelessWidget {
   final String heading;
   final void Function() onTap;
@@ -31,6 +30,7 @@ class CustomButton extends StatelessWidget {
               color: Colors.white,
               fontWeight: FontWeight.bold,
               fontSize: 16,
+              fontFamily: "Poppins",
             ),
           ),
         ),

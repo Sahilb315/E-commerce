@@ -20,6 +20,8 @@ class CreditDebitCardBloc
     on<CreditDebitFetchCardsEvent>(creditDebitFetchCardsEvent);
     on<CreditDebitCardEmptyFieldEvent>(creditDebitCardEmptyFieldEvent);
     on<CreditDebitUpdateCardEvent>(creditDebitUpdateCardEvent);
+    on<CreditDebitNavigateToPlaceOrderPageEvent>(
+        creditDebitNavigateToPlaceOrderPageEvent);
   }
 
   final cardRepo = CreditCardRepo();
@@ -56,5 +58,11 @@ class CreditDebitCardBloc
     await cardRepo.updateSelectedAddress(event.cardModel);
     final cardsList = await cardRepo.fetchAllCards();
     emit(CreditCardLoadedState(cardsList: cardsList));
+  }
+
+  FutureOr<void> creditDebitNavigateToPlaceOrderPageEvent(
+      CreditDebitNavigateToPlaceOrderPageEvent event,
+      Emitter<CreditDebitCardState> emit) {
+    emit(CreditDebitCardNavigateToPlaceOrderPageActionState());
   }
 }

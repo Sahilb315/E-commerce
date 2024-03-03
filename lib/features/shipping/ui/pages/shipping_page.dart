@@ -1,7 +1,5 @@
 // ignore_for_file: type_literal_in_constant_pattern
 
-import 'dart:developer';
-
 import 'package:e_commerce_app/features/address/model/address_model.dart';
 import 'package:e_commerce_app/features/address/ui/widget/address_text_field.dart';
 import 'package:e_commerce_app/features/address/ui/widget/address_tile.dart';
@@ -17,7 +15,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 class ShippingPage extends StatefulWidget {
-  const ShippingPage({super.key});
+  const ShippingPage({super.key,});
 
   @override
   State<ShippingPage> createState() => _ShippingPageState();
@@ -97,7 +95,9 @@ class _ShippingPageState extends State<ShippingPage> {
           } else if (state is ShippingNavigateToAddNewAddressPageActionState) {
             HelperFunctions.pushReplacementNavigateToScreenUpDownAnimation(
               context,
-              AddAdressShippingPage(),
+              AddAdressShippingPage(
+                
+              ),
             );
           } else if (state is ShippingNavigateToPaymentPageActionState) {
             HelperFunctions.navigateToScreenRightLeftAnimation(
@@ -107,7 +107,6 @@ class _ShippingPageState extends State<ShippingPage> {
           }
         },
         builder: (context, state) {
-          log(state.runtimeType.toString());
           switch (state.runtimeType) {
             case ShippingLoadingState:
               return Center(
@@ -139,7 +138,6 @@ class _ShippingPageState extends State<ShippingPage> {
               );
             case ShippingLoadedState:
               final addressList = (state as ShippingLoadedState).addresses;
-              log(addressList.toString());
               return Column(
                 children: [
                   Expanded(

@@ -1,7 +1,10 @@
 // ignore_for_file: type_literal_in_constant_pattern
 
+import 'dart:developer';
+
 import 'package:e_commerce_app/features/credit_debit_card/bloc/credit_debit_card_bloc.dart';
 import 'package:e_commerce_app/features/credit_debit_card/ui/pages/add_credit_debit_card_page.dart';
+import 'package:e_commerce_app/features/place_order/ui/place_order_page.dart';
 import 'package:e_commerce_app/features/product_detail/ui/widgets/custom_button.dart';
 import 'package:e_commerce_app/helper/helper_functions.dart';
 import 'package:e_commerce_app/utils/theme/app_colors.dart';
@@ -10,14 +13,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
 
-class CardsPaymentPage extends StatefulWidget {
-  const CardsPaymentPage({super.key});
+class OrderCreditCardsPage extends StatefulWidget {
+  const OrderCreditCardsPage({super.key});
 
   @override
-  State<CardsPaymentPage> createState() => _CardsPaymentPageState();
+  State<OrderCreditCardsPage> createState() => _CardsPaymentPageState();
 }
 
-class _CardsPaymentPageState extends State<CardsPaymentPage> {
+class _CardsPaymentPageState extends State<OrderCreditCardsPage> {
   final cardBloc = CreditDebitCardBloc();
 
   @override
@@ -63,7 +66,9 @@ class _CardsPaymentPageState extends State<CardsPaymentPage> {
             children: [
               CustomButton(
                 heading: "Proceed",
-                onTap: () {},
+                onTap: () {
+                  cardBloc.add(CreditDebitNavigateToPlaceOrderPageEvent());
+                },
               ),
             ],
           ),
@@ -71,15 +76,26 @@ class _CardsPaymentPageState extends State<CardsPaymentPage> {
       ),
       body: BlocConsumer<CreditDebitCardBloc, CreditDebitCardState>(
         bloc: cardBloc,
+        buildWhen: (previous, current) =>
+            current is! CreditDebitCardActionState,
+        listenWhen: (previous, current) =>
+            current is CreditDebitCardActionState,
         listener: (context, state) {
           if (state is CreditDebitNavigateToAddNewCardPageActionState) {
             HelperFunctions.pushReplacementNavigateToScreenUpDownAnimation(
               context,
               AddCreditDebitCardPage(),
             );
+          } else if (state
+              is CreditDebitCardNavigateToPlaceOrderPageActionState) {
+            HelperFunctions.navigateToScreenRightLeftAnimation(
+              context,
+              const PlaceOrderPage(),
+            );
           }
         },
         builder: (context, state) {
+          log(state.runtimeType.toString());
           switch (state.runtimeType) {
             case CreditCardLoadingState:
               return Center(
@@ -91,6 +107,8 @@ class _CardsPaymentPageState extends State<CardsPaymentPage> {
               );
             case CreditCardLoadedState:
               final cardsList = (state as CreditCardLoadedState).cardsList;
+              log("Loaded");
+              log(cardsList.toString());
               return Column(
                 children: [
                   Expanded(
@@ -120,7 +138,7 @@ class _CardsPaymentPageState extends State<CardsPaymentPage> {
                                 expiryDate: cardsList[index].expiryDate,
                                 cardHolderName: cardsList[index].cardHolderName,
                                 cvvCode: cardsList[index].cvvCode,
-                                showBackView: true,
+                                showBackView: false,
                                 onCreditCardWidgetChange: (creditCardModel) {},
                                 bankName: cardsList[index].bankName,
                                 isHolderNameVisible: true,

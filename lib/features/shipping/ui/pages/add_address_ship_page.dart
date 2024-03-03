@@ -61,7 +61,7 @@ class AddAdressShippingPage extends StatelessWidget {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const ShippingPage(),
+                    builder: (context) => ShippingPage(),
                   ),
                 );
               },

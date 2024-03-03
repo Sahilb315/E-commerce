@@ -13,3 +13,4 @@ class PaymentNavigateToGooglePayPageOrderActionState extends PaymentActionOrderS
 
 class PaymentNavigateToCashOnDeliveryPageOrderActionState
     extends PaymentActionOrderState {}
+

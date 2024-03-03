@@ -29,7 +29,7 @@ class OrderPaymentPage extends StatelessWidget {
           if (state is PaymentNavigateToCreditDebitPageOrderActionState) {
             HelperFunctions.navigateToScreenRightLeftAnimation(
               context,
-              const CardsPaymentPage(),
+              const OrderCreditCardsPage(),
             );
           } else if (state is PaymentNavigateToGooglePayPageOrderActionState) {
           } else if (state

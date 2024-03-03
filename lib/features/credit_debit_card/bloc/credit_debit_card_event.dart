@@ -26,3 +26,5 @@ class CreditDebitUpdateCardEvent extends CreditDebitCardEvent {
 class CreditDebitNavigateToAddNewCardPageEvent extends CreditDebitCardEvent {}
 
 class CreditDebitCardEmptyFieldEvent extends CreditDebitCardEvent {}
+
+class CreditDebitNavigateToPlaceOrderPageEvent extends CreditDebitCardEvent {}

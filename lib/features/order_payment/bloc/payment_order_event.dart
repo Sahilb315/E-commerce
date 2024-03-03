@@ -8,3 +8,4 @@ class PaymentNavigateToCreditDebitPageOrderEvent extends PaymentOrderEvent {}
 class PaymentNavigateToGooglePayPageOrderEvent extends PaymentOrderEvent {}
 
 class PaymentNavigateToCashOnDeliveryPageOrderEvent extends PaymentOrderEvent {}
+
