@@ -13,27 +13,28 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc() : super(LoginInitial()) {
     on<LoginPageSignInButtonClickedEvent>(loginPageSignInButtonClickedEvent);
     on<LoginPageGoogleSignInButtonClickedEvent>(
-        loginPageGoogleSignInButtonClickedEvent);
+      loginPageGoogleSignInButtonClickedEvent,
+    );
     on<LoginPageNavigateToRegisterPageEvent>(
-        loginPageNavigateToRegisterPageEvent);
+      loginPageNavigateToRegisterPageEvent,
+    );
   }
 
   final loginRepo = LoginRepo();
 
   FutureOr<void> loginPageSignInButtonClickedEvent(
-      LoginPageSignInButtonClickedEvent event, Emitter<LoginState> emit) async{
-    try {
-      if (event.email.isEmpty || event.password.isEmpty) {
-        emit(LoginInvalidInputActionState());
-      } else {
-       await loginRepo.loginUser(
-          event.email,
-          event.password,
-        );
+      LoginPageSignInButtonClickedEvent event, Emitter<LoginState> emit) async {
+    if (event.email.isEmpty || event.password.isEmpty) {
+      emit(LoginInvalidInputActionState());
+    } else {
+      String successOrNot = await loginRepo.loginUser(event.email, event.password);
+      if (successOrNot.isEmpty) {
         emit(LoginSuccessfulActionState());
+      } else {
+        emit(LoginErrorActionState(
+          errorMessage: successOrNot
+        ));
       }
-    } catch (e) {
-      emit(LoginErrorActionState());
     }
   }
 
@@ -41,7 +42,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       LoginPageGoogleSignInButtonClickedEvent event, Emitter<LoginState> emit) {
     emit(LoginSuccessfulActionState());
     // If error show Snackbar
-    emit(LoginErrorActionState());
+    emit(LoginErrorActionState(errorMessage: ""));
   }
 
   FutureOr<void> loginPageNavigateToRegisterPageEvent(

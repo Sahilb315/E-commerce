@@ -31,8 +31,19 @@ class PlaceOrderBloc extends Bloc<PlaceOrderEvent, PlaceOrderState> {
         await placeOrderRepo.getCurrentPaymentOptionSelected();
     emit(PlaceOrderLoadedState(
       cartList: cartList,
-      address: address,
-      cardModel: paymentOption,
+      address: address ??
+          AddressModel(
+              address: '', isSelected: false, name: '', phoneNumber: ''),
+      cardModel: paymentOption ??
+          CreditDebitCardModel(
+            cardNumber: "",
+            cardHolderName: "",
+            expiryDate: "",
+            cvvCode: "",
+            bankName: "",
+            colorIndex: 0,
+            isSelected: false,
+          ),
     ));
   }
 

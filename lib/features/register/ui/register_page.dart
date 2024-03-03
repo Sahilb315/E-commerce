@@ -33,6 +33,7 @@ class _RegisterPageState extends State<RegisterPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        surfaceTintColor: Colors.white,
         backgroundColor: Colors.white,
       ),
       body: BlocConsumer<RegisterBloc, RegisterState>(
@@ -62,8 +63,20 @@ class _RegisterPageState extends State<RegisterPage> {
           } else if (state is RegisterLoadingActionState) {
             showDialog(
               context: context,
-              builder: (context) => const Center(
-                child: CircularProgressIndicator.adaptive(),
+              builder: (context) => Center(
+                child: CircularProgressIndicator(
+                  strokeWidth: 3,
+                  color: AppColors.backgroundColor.withOpacity(0.7),
+                  strokeCap: StrokeCap.round,
+                ),
+              ),
+            );
+          } else if (state is RegisterErrorActionState) {
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                backgroundColor: Colors.red.shade400,
+                content: Text(state.errorMessage),
               ),
             );
           }
@@ -127,7 +140,6 @@ class _RegisterPageState extends State<RegisterPage> {
                       controller: _phoneNumberController,
                       text: "Phone Number",
                       inputType: TextInputType.phone,
-                      maxNumbers: 10,
                       icon: CupertinoIcons.phone,
                     ),
                     const SizedBox(
@@ -141,6 +153,10 @@ class _RegisterPageState extends State<RegisterPage> {
                       text: "Sign Up",
                       displayPrefixImage: false,
                       onTap: () {
+                        if (!_emailController.text.contains("@")) {
+                          registerBloc.add(RegisterInvalidEmailEvent());
+                          return;
+                        }
                         registerBloc.add(
                           RegisterButtonClickedEvent(
                             password: _passwordController.text,

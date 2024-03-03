@@ -13,6 +13,10 @@ class RegisterLoadingActionState extends RegisterActionState {}
 
 class RegisterSuccessfulActionState extends RegisterActionState {}
 
-class RegisterErrorActionState extends RegisterActionState {}
+class RegisterErrorActionState extends RegisterActionState {
+  final String errorMessage;
+
+  RegisterErrorActionState({required this.errorMessage});
+}
 
 class RegisterInvalidInputActionState extends RegisterActionState {}

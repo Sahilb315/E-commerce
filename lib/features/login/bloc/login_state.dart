@@ -9,7 +9,11 @@ final class LoginInitial extends LoginState {}
 
 class LoginSuccessfulActionState extends LoginActionState {}
 
-class LoginErrorActionState extends LoginActionState {}
+class LoginErrorActionState extends LoginActionState {
+  final String errorMessage;
+
+  LoginErrorActionState({required this.errorMessage});
+}
 
 class LoginInvalidInputActionState extends LoginActionState {}
 

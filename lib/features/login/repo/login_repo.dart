@@ -3,14 +3,18 @@ import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginRepo {
-  Future<void> loginUser(String email, String password) async {
+  Future<String> loginUser(String email, String password) async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
+      // Returning empty string if the user is successfully logged in
+      return "";
     } catch (e) {
       log(e.toString());
+      // Returning error if the user is not successfully logged in & has an error
+      return e.toString();
     }
   }
 }

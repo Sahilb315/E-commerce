@@ -14,6 +14,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   RegisterBloc() : super(RegisterInitial()) {
     on<RegisterNavigateToLoginPageEvent>(registerNavigateToLoginPageEvent);
     on<RegisterButtonClickedEvent>(registerButtonClickedEvent);
+    on<RegisterInvalidEmailEvent>(registerInvalidEmailEvent);
   }
 
   final registerRepo = RegisterRepo();
@@ -24,22 +25,27 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   }
 
   FutureOr<void> registerButtonClickedEvent(
-      RegisterButtonClickedEvent event, Emitter<RegisterState> emit) async{
+      RegisterButtonClickedEvent event, Emitter<RegisterState> emit) async {
     if (event.user.email.isEmpty ||
         event.user.fullName.isEmpty ||
         event.user.phoneNumber.isEmpty ||
         event.password.isEmpty) {
-      emit(RegisterLoadingActionState());
       emit(RegisterInvalidInputActionState());
     } else {
       // Register User
-      try {
+      String userCreatedOrNot =
+          await registerRepo.registerUser(event.user, event.password);
+      if (userCreatedOrNot.isEmpty) {
         emit(RegisterLoadingActionState());
-       await registerRepo.registerUser(event.user, event.password);
         emit(RegisterSuccessfulActionState());
-      } catch (e) {
-        emit(RegisterErrorActionState());
+      } else {
+        emit(RegisterErrorActionState(errorMessage: userCreatedOrNot));
       }
     }
+  }
+
+  FutureOr<void> registerInvalidEmailEvent(
+      RegisterInvalidEmailEvent event, Emitter<RegisterState> emit) {
+    emit(RegisterErrorActionState(errorMessage: "Invalid Email"));
   }
 }

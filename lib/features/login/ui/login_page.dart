@@ -41,6 +41,7 @@ class _LoginPageState extends State<LoginPage> {
               const RegisterPage(),
             );
           } else if (state is LoginInvalidInputActionState) {
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 backgroundColor: AppColors.backgroundColor.withOpacity(0.5),
@@ -52,6 +53,14 @@ class _LoginPageState extends State<LoginPage> {
             HelperFunctions.navigateToScreenRightLeftAnimation(
               context,
               const BottomNavigationPage(index: 0),
+            );
+          } else if (state is LoginErrorActionState) {
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                backgroundColor: Colors.red.shade400,
+                content: Text(state.errorMessage),
+              ),
             );
           }
         },

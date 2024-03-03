@@ -5,18 +5,17 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class RegisterRepo {
-  Future<void> registerUser(UserModel userModel, String password) async {
+  Future<String> registerUser(UserModel userModel, String password) async {
     try {
-      final user = FirebaseAuth.instance.currentUser!;
-      // final userCredential =
-      FirebaseAuth.instance.createUserWithEmailAndPassword(
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: userModel.email,
         password: password,
       );
-      user.updateDisplayName(userModel.fullName);
-      createUserDocument(userModel);
+     await createUserDocument(userModel);
+      return "";
     } catch (e) {
       log(e.toString());
+      return e.toString();
     }
   }
 

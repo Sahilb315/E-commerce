@@ -11,3 +11,5 @@ class RegisterButtonClickedEvent extends RegisterEvent {
 }
 
 class RegisterNavigateToLoginPageEvent extends RegisterEvent {}
+
+class RegisterInvalidEmailEvent extends RegisterEvent {}
