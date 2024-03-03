@@ -8,6 +8,7 @@ import 'package:e_commerce_app/features/home/model/product_model.dart';
 import 'package:e_commerce_app/features/home/repo/home_repo.dart';
 import 'package:e_commerce_app/features/product_detail/bloc/product_detail_bloc.dart';
 import 'package:e_commerce_app/features/product_detail/ui/widgets/custom_button.dart';
+import 'package:e_commerce_app/features/shipping/ui/pages/shipping_page.dart';
 import 'package:e_commerce_app/helper/helper_functions.dart';
 import 'package:e_commerce_app/utils/theme/app_colors.dart';
 import 'package:flutter/cupertino.dart';
@@ -96,6 +97,14 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
             HelperFunctions.navigateToScreenRightLeftAnimation(
               context,
               const BottomNavigationPage(index: 2),
+            );
+          } else if (state
+              is ProductDetailNavigateToShipPageOnBuyNowActionState) {
+            HelperFunctions.navigateToScreenRightLeftAnimation(
+              context,
+              ShippingPage(
+                productModel: widget.productModel,
+              ),
             );
           }
         },
@@ -275,7 +284,11 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
             ),
             CustomButton(
               heading: "Buy now",
-              onTap: () {},
+              onTap: () {
+                productBloc.add(ProductDetailNavigateToShipPageOnBuyNowEvent(
+                  productModel: widget.productModel,
+                ));
+              },
             ),
           ],
         ),

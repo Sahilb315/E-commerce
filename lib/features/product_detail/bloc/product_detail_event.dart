@@ -24,3 +24,9 @@ class ProductDetailProductAddToCartEvent extends ProductDetailEvent {
 }
 
 class ProductDetailNavigateToCartPageEvent extends ProductDetailEvent {}
+
+class ProductDetailNavigateToShipPageOnBuyNowEvent extends ProductDetailEvent {
+  final ProductModel productModel;
+
+  ProductDetailNavigateToShipPageOnBuyNowEvent({required this.productModel});
+}

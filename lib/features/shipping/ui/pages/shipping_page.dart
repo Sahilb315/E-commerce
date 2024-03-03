@@ -3,6 +3,7 @@
 import 'package:e_commerce_app/features/address/model/address_model.dart';
 import 'package:e_commerce_app/features/address/ui/widget/address_text_field.dart';
 import 'package:e_commerce_app/features/address/ui/widget/address_tile.dart';
+import 'package:e_commerce_app/features/home/model/product_model.dart';
 import 'package:e_commerce_app/features/order_payment/ui/order_payment_page.dart';
 import 'package:e_commerce_app/features/product_detail/ui/widgets/custom_button.dart';
 import 'package:e_commerce_app/features/shipping/bloc/shipping_bloc.dart';
@@ -15,7 +16,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 class ShippingPage extends StatefulWidget {
-  const ShippingPage({super.key,});
+  final ProductModel? productModel;
+  const ShippingPage({
+    super.key,
+    this.productModel,
+  });
 
   @override
   State<ShippingPage> createState() => _ShippingPageState();
@@ -95,14 +100,14 @@ class _ShippingPageState extends State<ShippingPage> {
           } else if (state is ShippingNavigateToAddNewAddressPageActionState) {
             HelperFunctions.pushReplacementNavigateToScreenUpDownAnimation(
               context,
-              AddAdressShippingPage(
-                
-              ),
+              AddAdressShippingPage(),
             );
           } else if (state is ShippingNavigateToPaymentPageActionState) {
             HelperFunctions.navigateToScreenRightLeftAnimation(
               context,
-              OrderPaymentPage(),
+              OrderPaymentPage(
+                productModel: widget.productModel,
+              ),
             );
           }
         },

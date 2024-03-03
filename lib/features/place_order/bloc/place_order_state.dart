@@ -23,5 +23,7 @@ class PlaceOrderLoadedState extends PlaceOrderState {
 
 class PlaceOrderErrorState extends PlaceOrderState {}
 
-class PlaceOrderNavigateToOrderSUccessPageActionState
+class PlaceOrderNavigateToOrderSuccessPageActionState
     extends PlaceOrderActionState {}
+
+class OrderSuccessNavigateToHomePageActionState extends PlaceOrderActionState {}

@@ -1,9 +1,8 @@
 // ignore_for_file: type_literal_in_constant_pattern
 
-import 'dart:developer';
-
 import 'package:e_commerce_app/features/credit_debit_card/bloc/credit_debit_card_bloc.dart';
 import 'package:e_commerce_app/features/credit_debit_card/ui/pages/add_credit_debit_card_page.dart';
+import 'package:e_commerce_app/features/home/model/product_model.dart';
 import 'package:e_commerce_app/features/place_order/ui/place_order_page.dart';
 import 'package:e_commerce_app/features/product_detail/ui/widgets/custom_button.dart';
 import 'package:e_commerce_app/helper/helper_functions.dart';
@@ -14,7 +13,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
 
 class OrderCreditCardsPage extends StatefulWidget {
-  const OrderCreditCardsPage({super.key});
+  final ProductModel? productModel;
+  const OrderCreditCardsPage({super.key, this.productModel});
 
   @override
   State<OrderCreditCardsPage> createState() => _CardsPaymentPageState();
@@ -90,12 +90,13 @@ class _CardsPaymentPageState extends State<OrderCreditCardsPage> {
               is CreditDebitCardNavigateToPlaceOrderPageActionState) {
             HelperFunctions.navigateToScreenRightLeftAnimation(
               context,
-              const PlaceOrderPage(),
+              PlaceOrderPage(
+                productModel: widget.productModel,
+              ),
             );
           }
         },
         builder: (context, state) {
-          log(state.runtimeType.toString());
           switch (state.runtimeType) {
             case CreditCardLoadingState:
               return Center(
@@ -107,8 +108,6 @@ class _CardsPaymentPageState extends State<OrderCreditCardsPage> {
               );
             case CreditCardLoadedState:
               final cardsList = (state as CreditCardLoadedState).cardsList;
-              log("Loaded");
-              log(cardsList.toString());
               return Column(
                 children: [
                   Expanded(

@@ -36,3 +36,6 @@ class ProductDetailProductAddedToCartActionState
 
 class ProductDetailNavigateToCartPageActionState
     extends ProductDetailActionState {}
+
+class ProductDetailNavigateToShipPageOnBuyNowActionState
+    extends ProductDetailActionState {}

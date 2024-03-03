@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:e_commerce_app/features/address/model/address_model.dart';
 import 'package:e_commerce_app/features/cart/model/cart_model.dart';
 import 'package:e_commerce_app/features/credit_debit_card/model/card_model.dart';
+import 'package:e_commerce_app/features/place_order/model/order_model.dart';
 import 'package:e_commerce_app/features/place_order/repo/place_order_repo.dart';
 // ignore: depend_on_referenced_packages
 import 'package:meta/meta.dart';
@@ -15,6 +16,8 @@ class PlaceOrderBloc extends Bloc<PlaceOrderEvent, PlaceOrderState> {
   PlaceOrderBloc() : super(PlaceOrderInitial()) {
     on<PlaceOrderFetchEvent>(placeOrderFetchEvent);
     on<PlaceOrderButtonClickedEvent>(placeOrderButtonClickedEvent);
+    on<OrderSuccessNavigateToHomePageEvent>(
+        orderSuccessNavigateToHomePageEvent);
   }
 
   final placeOrderRepo = PlaceOrderRepo();
@@ -34,7 +37,14 @@ class PlaceOrderBloc extends Bloc<PlaceOrderEvent, PlaceOrderState> {
   }
 
   FutureOr<void> placeOrderButtonClickedEvent(
-      PlaceOrderButtonClickedEvent event, Emitter<PlaceOrderState> emit) {
-    emit(PlaceOrderNavigateToOrderSUccessPageActionState());
+      PlaceOrderButtonClickedEvent event, Emitter<PlaceOrderState> emit) async {
+    await placeOrderRepo.addOrderInFirestore(event.orderModel);
+    emit(PlaceOrderNavigateToOrderSuccessPageActionState());
+  }
+
+  FutureOr<void> orderSuccessNavigateToHomePageEvent(
+      OrderSuccessNavigateToHomePageEvent event,
+      Emitter<PlaceOrderState> emit) {
+    emit(OrderSuccessNavigateToHomePageActionState());
   }
 }

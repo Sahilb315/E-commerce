@@ -21,6 +21,8 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
     on<ProductDetailProductAddToCartEvent>(productDetailProductAddToCartEvent);
     on<ProductDetailNavigateToCartPageEvent>(
         productDetailNavigateToCartPageEvent);
+    on<ProductDetailNavigateToShipPageOnBuyNowEvent>(
+        productDetailNavigateToShipPageOnBuyNowEvent);
   }
 
   final productRepo = ProductDetailRepo();
@@ -64,5 +66,11 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
       ProductDetailNavigateToCartPageEvent event,
       Emitter<ProductDetailState> emit) {
     emit(ProductDetailNavigateToCartPageActionState());
+  }
+
+  FutureOr<void> productDetailNavigateToShipPageOnBuyNowEvent(
+      ProductDetailNavigateToShipPageOnBuyNowEvent event,
+      Emitter<ProductDetailState> emit) {
+    emit(ProductDetailNavigateToShipPageOnBuyNowActionState());
   }
 }

@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/features/credit_debit_card/ui/pages/order_payment_pages/order_cards_page.dart';
+import 'package:e_commerce_app/features/home/model/product_model.dart';
 import 'package:e_commerce_app/features/order_payment/bloc/payment_order_bloc.dart';
 import 'package:e_commerce_app/helper/helper_functions.dart';
 import 'package:e_commerce_app/utils/theme/app_colors.dart';
@@ -7,7 +8,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 class OrderPaymentPage extends StatelessWidget {
-  OrderPaymentPage({super.key});
+  final ProductModel? productModel;
+  OrderPaymentPage({super.key, this.productModel});
 
   final paymentBloc = PaymentOrderBloc();
 
@@ -29,7 +31,9 @@ class OrderPaymentPage extends StatelessWidget {
           if (state is PaymentNavigateToCreditDebitPageOrderActionState) {
             HelperFunctions.navigateToScreenRightLeftAnimation(
               context,
-              const OrderCreditCardsPage(),
+              OrderCreditCardsPage(
+                productModel: productModel,
+              ),
             );
           } else if (state is PaymentNavigateToGooglePayPageOrderActionState) {
           } else if (state
