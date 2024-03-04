@@ -1,3 +1,7 @@
+// ignore_for_file: unrelated_type_equality_checks
+
+import 'package:e_commerce_app/features/login/ui/login_page.dart';
+import 'package:e_commerce_app/helper/helper_functions.dart';
 import 'package:e_commerce_app/utils/theme/app_colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +15,7 @@ class ProfilePage extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
-          title: Text(
+        title: Text(
           "Profile",
           style: MyTextThemes.myTextTheme().titleMedium,
         ),
@@ -19,12 +23,16 @@ class ProfilePage extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            Text('Welcome to the Profile Page!'),
+            const Text('Welcome to the Profile Page!'),
             ElevatedButton(
               onPressed: () {
+                Navigator.popUntil(
+                    context, (route) => route == const ProfilePage());
+                HelperFunctions.navigateToScreenRightLeftAnimation(
+                    context, const LoginPage());
                 FirebaseAuth.instance.signOut();
               },
-              child: Text("Sign out"),
+              child: const Text("Sign out"),
             )
           ],
         ),

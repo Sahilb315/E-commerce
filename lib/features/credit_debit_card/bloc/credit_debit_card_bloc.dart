@@ -29,7 +29,12 @@ class CreditDebitCardBloc
   FutureOr<void> creditDebitFetchCardsEvent(CreditDebitFetchCardsEvent event,
       Emitter<CreditDebitCardState> emit) async {
     final cardsList = await cardRepo.fetchAllCards();
-    emit(CreditCardLoadedState(cardsList: cardsList));
+
+    cardsList.isEmpty
+        ? emit(CreditCardListEmptyState())
+        : emit(CreditCardLoadedState(
+            cardsList: cardsList,
+          ));
   }
 
   FutureOr<void> creditDebitNavigateToAddNewCardPageEvent(
@@ -42,6 +47,10 @@ class CreditDebitCardBloc
       Emitter<CreditDebitCardState> emit) async {
     await cardRepo.addNewCreditCard(event.cardModel);
     emit(CreditDebitCardAddedSuccessfullyActionState());
+    final cardsList = await cardRepo.fetchAllCards();
+    emit(CreditCardLoadedState(
+      cardsList: cardsList,
+    ));
   }
 
   FutureOr<void> creditDebitDeleteCardEvent(CreditDebitDeleteCardEvent event,
@@ -57,7 +66,10 @@ class CreditDebitCardBloc
       Emitter<CreditDebitCardState> emit) async {
     await cardRepo.updateSelectedAddress(event.cardModel);
     final cardsList = await cardRepo.fetchAllCards();
-    emit(CreditCardLoadedState(cardsList: cardsList));
+
+    emit(CreditCardLoadedState(
+      cardsList: cardsList,
+    ));
   }
 
   FutureOr<void> creditDebitNavigateToPlaceOrderPageEvent(

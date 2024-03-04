@@ -11,6 +11,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
+import 'package:flutter_svg/svg.dart';
 
 class OrderCreditCardsPage extends StatefulWidget {
   final ProductModel? productModel;
@@ -57,23 +58,6 @@ class _CardsPaymentPageState extends State<OrderCreditCardsPage> {
           ),
         ],
       ),
-      bottomNavigationBar: Container(
-        height: MediaQuery.sizeOf(context).height * 0.1,
-        color: Colors.transparent,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 10),
-          child: Column(
-            children: [
-              CustomButton(
-                heading: "Proceed",
-                onTap: () {
-                  cardBloc.add(CreditDebitNavigateToPlaceOrderPageEvent());
-                },
-              ),
-            ],
-          ),
-        ),
-      ),
       body: BlocConsumer<CreditDebitCardBloc, CreditDebitCardState>(
         bloc: cardBloc,
         buildWhen: (previous, current) =>
@@ -104,6 +88,26 @@ class _CardsPaymentPageState extends State<OrderCreditCardsPage> {
                   strokeWidth: 3,
                   color: AppColors.backgroundColor.withOpacity(0.7),
                   strokeCap: StrokeCap.round,
+                ),
+              );
+            case CreditCardListEmptyState:
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      height: 80,
+                      "assets/no_card_found.svg",
+                    ),
+                    Text(
+                      "No Cards added...",
+                      style: TextStyle(
+                        fontFamily: "Poppins",
+                        fontSize: 20,
+                        color: Colors.grey.shade600,
+                      ),
+                    ),
+                  ],
                 ),
               );
             case CreditCardLoadedState:
@@ -150,6 +154,27 @@ class _CardsPaymentPageState extends State<OrderCreditCardsPage> {
                       },
                     ),
                   ),
+                  Container(
+                    height: MediaQuery.sizeOf(context).height * 0.1,
+                    color: Colors.transparent,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 14.0, vertical: 10),
+                      child: Column(
+                        children: [
+                          CustomButton(
+                            heading: "Proceed",
+                            onTap: () {
+                              cardBloc.add(
+                                CreditDebitNavigateToPlaceOrderPageEvent(),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                  // : const SizedBox.shrink()
                 ],
               );
             case CreditCardErrorState:

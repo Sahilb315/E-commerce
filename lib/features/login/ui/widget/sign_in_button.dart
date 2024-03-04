@@ -30,12 +30,12 @@ class SignInButton extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 16.0),
           child: displayPrefixImage
               ? Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(left: 25),
+                      padding: const EdgeInsets.only(left: 0),
                       child: Container(
-                        alignment: Alignment.centerLeft,
+                        // alignment: Alignment.centerLeft,
                         width: 20,
                         height: 20,
                         decoration: const BoxDecoration(
@@ -46,20 +46,20 @@ class SignInButton extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Text(
-                      text,
-                      textAlign: TextAlign.center,
-                      style: displayPrefixImage
-                          ? const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                              color: Colors.grey,
-                            )
-                          : const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                    ),
+                    // Text(
+                    //   text,
+                    //   textAlign: TextAlign.center,
+                    //   style: displayPrefixImage
+                    //       ? const TextStyle(
+                    //           fontWeight: FontWeight.bold,
+                    //           fontSize: 16,
+                    //           color: Colors.grey,
+                    //         )
+                    //       : const TextStyle(
+                    //           color: Colors.white,
+                    //           fontWeight: FontWeight.bold,
+                    //         ),
+                    // ),
                     const SizedBox.shrink(),
                     const SizedBox.shrink()
                   ],

@@ -42,18 +42,24 @@ class _RegisterPageState extends State<RegisterPage> {
         buildWhen: (previous, current) => current is! RegisterActionState,
         listener: (context, state) {
           if (state is RegisterNavigatToLoginPageActionState) {
-            HelperFunctions.navigateToScreenRightLeftAnimation(
+            Navigator.pop(context);
+            Navigator.pushReplacement(
               context,
-              const LoginPage(),
+              MaterialPageRoute(
+                builder: (_) => const LoginPage(),
+              ),
             );
           } else if (state is RegisterInvalidInputActionState) {
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                backgroundColor: AppColors.backgroundColor.withOpacity(0.5),
-                content: const Text("Fill out all fields"),
+                duration: const Duration(seconds: 1),
+                backgroundColor: Colors.red,
+                content: Text(state.errorMessage),
               ),
             );
           } else if (state is RegisterSuccessfulActionState) {
+            Navigator.pop(context);
             Navigator.popUntil(
                 context, (route) => route == const RegisterPage());
             HelperFunctions.navigateToScreenRightLeftAnimation(
@@ -72,10 +78,12 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
             );
           } else if (state is RegisterErrorActionState) {
+            Navigator.pop(context);
             ScaffoldMessenger.of(context).hideCurrentSnackBar();
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 backgroundColor: Colors.red.shade400,
+                duration: const Duration(seconds: 2),
                 content: Text(state.errorMessage),
               ),
             );
@@ -153,13 +161,13 @@ class _RegisterPageState extends State<RegisterPage> {
                       text: "Sign Up",
                       displayPrefixImage: false,
                       onTap: () {
-                        if (!_emailController.text.contains("@")) {
-                          registerBloc.add(RegisterInvalidEmailEvent());
-                          return;
-                        }
+                        FocusScope.of(context).unfocus();
                         registerBloc.add(
                           RegisterButtonClickedEvent(
-                            password: _passwordController.text,
+                            nameController: _usernameController,
+                            emailController: _emailController,
+                            phoneController: _phoneNumberController,
+                            passwordController: _passwordController,
                             user: UserModel(
                               addressList: [],
                               fullName: _usernameController.text,
@@ -173,11 +181,6 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                           ),
                         );
-                        _usernameController.clear();
-                        _emailController.clear();
-                        _phoneNumberController.clear();
-                        _passwordController.clear();
-                        FocusScope.of(context).unfocus();
                       },
                     ),
                     const SizedBox(

@@ -1,5 +1,6 @@
 // ignore_for_file: type_literal_in_constant_pattern
 
+
 import 'package:e_commerce_app/features/address/model/address_model.dart';
 import 'package:e_commerce_app/features/address/ui/widget/address_text_field.dart';
 import 'package:e_commerce_app/features/address/ui/widget/address_tile.dart';
@@ -55,23 +56,6 @@ class _ShippingPageState extends State<ShippingPage> {
             },
           ),
         ],
-      ),
-      bottomNavigationBar: Container(
-        height: MediaQuery.sizeOf(context).height * 0.1,
-        color: Colors.white,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 14.0),
-          child: Column(
-            children: [
-              CustomButton(
-                heading: "Next",
-                onTap: () {
-                  shippingBloc.add(ShippingNavigateToPaymentPageEvent());
-                },
-              ),
-            ],
-          ),
-        ),
       ),
       body: BlocConsumer<ShippingBloc, ShippingState>(
         bloc: shippingBloc,
@@ -168,6 +152,25 @@ class _ShippingPageState extends State<ShippingPage> {
                           },
                         );
                       },
+                    ),
+                  ),
+                  Container(
+                    height: MediaQuery.sizeOf(context).height * 0.1,
+                    color: Colors.white,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 14.0),
+                      child: Column(
+                        children: [
+                          CustomButton(
+                            heading: "Next",
+                            onTap: () {
+                              shippingBloc.add(
+                                ShippingNavigateToPaymentPageEvent(),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],

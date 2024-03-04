@@ -10,6 +10,7 @@ import 'package:e_commerce_app/helper/helper_functions.dart';
 import 'package:e_commerce_app/utils/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -36,31 +37,51 @@ class _LoginPageState extends State<LoginPage> {
         buildWhen: (previous, current) => current is! LoginActionState,
         listener: (context, state) {
           if (state is LoginPageNavigateToRegisterPageActionState) {
-            HelperFunctions.navigateToScreenRightLeftAnimation(
+            Navigator.pushReplacement(
               context,
-              const RegisterPage(),
+              MaterialPageRoute(
+                builder: (_) => const RegisterPage(),
+              ),
             );
           } else if (state is LoginInvalidInputActionState) {
             ScaffoldMessenger.of(context).hideCurrentSnackBar();
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                backgroundColor: AppColors.backgroundColor.withOpacity(0.5),
-                content: const Text("Fill out all fields"),
+              const SnackBar(
+                backgroundColor: Colors.red,
+                content: Text("Fill out all fields"),
+                duration: Duration(seconds: 1),
               ),
             );
           } else if (state is LoginSuccessfulActionState) {
+            Navigator.pop(context);
             Navigator.popUntil(context, (route) => route == const LoginPage());
             HelperFunctions.navigateToScreenRightLeftAnimation(
               context,
               const BottomNavigationPage(index: 0),
             );
           } else if (state is LoginErrorActionState) {
+            Navigator.pop(context);
             ScaffoldMessenger.of(context).hideCurrentSnackBar();
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 backgroundColor: Colors.red.shade400,
                 content: Text(state.errorMessage),
+                duration: const Duration(seconds: 2),
               ),
+            );
+          } else if (state is LoginSuccessfulLoadingActionState) {
+            showDialog(
+              context: context,
+              builder: (context) {
+                return Center(
+                  child: CircularProgressIndicator(
+                    backgroundColor: Colors.transparent,
+                    strokeWidth: 3,
+                    color: AppColors.backgroundColor.withOpacity(0.7),
+                    strokeCap: StrokeCap.round,
+                  ),
+                );
+              },
             );
           }
         },
@@ -119,6 +140,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     SignInButton(
                       onTap: () {
+                        FocusScope.of(context).unfocus();
                         loginBloc.add(
                           LoginPageSignInButtonClickedEvent(
                             email: _emailController.text,
@@ -146,10 +168,19 @@ class _LoginPageState extends State<LoginPage> {
                         Expanded(child: Divider()),
                       ],
                     ),
-                    SignInButton(
+                    Text(
+                      "Sign in with",
+                      style: MyTextThemes.myTextTheme().bodySmall,
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    GestureDetector(
                       onTap: () {},
-                      text: "Login with Google",
-                      displayPrefixImage: true,
+                      child: SvgPicture.asset(
+                        "assets/google.svg",
+                        height: 45,
+                      ),
                     ),
                     const SizedBox(
                       height: 10,

@@ -19,4 +19,8 @@ class RegisterErrorActionState extends RegisterActionState {
   RegisterErrorActionState({required this.errorMessage});
 }
 
-class RegisterInvalidInputActionState extends RegisterActionState {}
+class RegisterInvalidInputActionState extends RegisterActionState {
+  final String errorMessage;
+
+  RegisterInvalidInputActionState({required this.errorMessage});
+}

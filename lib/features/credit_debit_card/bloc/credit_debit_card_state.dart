@@ -9,8 +9,11 @@ final class CreditDebitCardInitial extends CreditDebitCardState {}
 
 class CreditCardLoadingState extends CreditDebitCardState {}
 
+class CreditCardListEmptyState extends CreditDebitCardState {}
+
 class CreditCardLoadedState extends CreditDebitCardState {
   final List<CreditDebitCardModel> cardsList;
+  
 
   CreditCardLoadedState({required this.cardsList});
 }

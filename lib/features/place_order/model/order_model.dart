@@ -51,7 +51,7 @@ class OrderModel {
     return OrderModel(
       orderId: map['orderId'] as String,
       itemsOrdered: List<CartModel>.from(
-        (map['itemsOrdered'] as List<int>).map<CartModel>(
+        (map['itemsOrdered'] as List).map<CartModel>(
           (x) => CartModel.fromMap(x as Map<String, dynamic>),
         ),
       ),
