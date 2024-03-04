@@ -59,12 +59,12 @@ class UserModel {
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
       email: map['email'] as String,
-      favProducts: List<ProductModel>.from((map['favProducts'] as List<int>).map<ProductModel>((x) => ProductModel.fromMap(x as Map<String,dynamic>),),),
-      cartItems: List<ProductModel>.from((map['cartItems'] as List<int>).map<ProductModel>((x) => ProductModel.fromMap(x as Map<String,dynamic>),),),
+      favProducts: List<ProductModel>.from((map['favProducts'] as List).map<ProductModel>((x) => ProductModel.fromMap(x as Map<String,dynamic>),),),
+      cartItems: List<ProductModel>.from((map['cartItems'] as List).map<ProductModel>((x) => ProductModel.fromMap(x as Map<String,dynamic>),),),
       fullName: map['fullName'] as String,
       phoneNumber: map['phoneNumber'] as String,
       profilePic: map['profilePic'] as String,
-      addressList: List<AddressModel>.from((map['addressList'] as List<int>).map<AddressModel>((x) => AddressModel.fromMap(x as Map<String,dynamic>),),),
+      addressList: List<AddressModel>.from((map['addressList'] as List).map<AddressModel>((x) => AddressModel.fromMap(x as Map<String,dynamic>),),),
     );
   }
 

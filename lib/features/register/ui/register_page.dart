@@ -42,7 +42,6 @@ class _RegisterPageState extends State<RegisterPage> {
         buildWhen: (previous, current) => current is! RegisterActionState,
         listener: (context, state) {
           if (state is RegisterNavigatToLoginPageActionState) {
-            Navigator.pop(context);
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(

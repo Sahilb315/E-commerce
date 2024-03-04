@@ -7,7 +7,8 @@ import 'package:flutter/material.dart';
 // }
 
 class AppColors {
-  static Color backgroundColor =  const Color.fromRGBO(3, 155, 229, 1).withOpacity(1);
+  static Color backgroundColor =
+      const Color.fromRGBO(3, 155, 229, 1).withOpacity(1);
   // Amber
   static Color get amber500 => const Color(0XFFFFC107);
 
@@ -55,7 +56,8 @@ class MyTextThemes {
           fontWeight: FontWeight.w400,
         ),
         headlineSmall: TextStyle(
-          color: MyColorSchemes.primaryColorScheme.onPrimaryContainer.withOpacity(0.7),
+          color: MyColorSchemes.primaryColorScheme.onPrimaryContainer
+              .withOpacity(0.7),
           fontSize: 24,
           fontFamily: 'Poppins',
           fontWeight: FontWeight.w700,
