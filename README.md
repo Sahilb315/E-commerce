@@ -8,23 +8,24 @@
   - [What I learned](#what-i-learned)
   - [Author](#author)
 
-### Screenshot
-![Alt text](assets/app_photos/SS-1.jpg) 
-![Alt text](assets/app_photos/SS-2.jpg) 
-![Alt text](assets/app_photos/SS-3.jpg) 
-![Alt text](assets/app_photos/SS-4.jpg) 
-![Alt text](assets/app_photos/SS-5.jpg)
-![Alt text](assets/app_photos/SS-6.jpg)
-![Alt text](assets/app_photos/SS-7.jpg)
-![Alt text](assets/app_photos/SS-8.jpg)
-![Alt text](assets/app_photos/SS-9.jpg)
-![Alt text](assets/app_photos/SS-10.jpg)
-![Alt text](assets/app_photos/SS-11.jpg)
-![Alt text](assets/app_photos/SS-12.jpg)
-![Alt text](assets/app_photos/SS-13.jpg)
-![Alt text](assets/app_photos/SS-14.jpg)
-![Alt text](assets/app_photos/SS-15.jpg)
-![Alt text](assets/app_photos/SS-16.jpg)
+### Screenshot 
+![alt text](assets/app_photos/SS1.jpg)
+![alt text](assets/app_photos/SS2.jpg)
+![alt text](assets/app_photos/SS3.jpg)
+![alt text](assets/app_photos/SS4.jpg)
+![alt text](assets/app_photos/SS5.jpg)
+![alt text](assets/app_photos/SS6.jpg)
+![alt text](assets/app_photos/SS7.jpg)
+![alt text](assets/app_photos/SS8.jpg)
+![alt text](assets/app_photos/SS9.jpg)
+![alt text](assets/app_photos/SS10.jpg)
+![alt text](assets/app_photos/SS11.jpg)
+![alt text](assets/app_photos/SS12.jpg)
+![alt text](assets/app_photos/SS13.jpg)
+![alt text](assets/app_photos/SS14.jpg)
+![alt text](assets/app_photos/SS15.jpg)
+![alt text](assets/app_photos/SS16.jpg)
+
 
 ## Description
 
