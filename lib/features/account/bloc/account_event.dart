@@ -12,3 +12,5 @@ class AccountNavigateToOrderPageEvent extends AccountEvent {}
 class AccountNavigateToAddressPageEvent extends AccountEvent {}
 
 class AccountNavigateToPaymentPageEvent extends AccountEvent {}
+
+class AccountLogOutEvent extends AccountEvent {}

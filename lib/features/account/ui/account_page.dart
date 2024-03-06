@@ -1,9 +1,13 @@
+// ignore_for_file: unrelated_type_equality_checks
+
 import 'package:e_commerce_app/features/account/bloc/account_bloc.dart';
 import 'package:e_commerce_app/features/address/ui/pages/address_page.dart';
+import 'package:e_commerce_app/features/login/ui/login_page.dart';
 import 'package:e_commerce_app/features/orders/ui/order_page.dart';
 import 'package:e_commerce_app/features/payment_account/ui/pages/payment_account_page.dart';
 import 'package:e_commerce_app/helper/helper_functions.dart';
 import 'package:e_commerce_app/utils/theme/app_colors.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -46,6 +50,11 @@ class _AccountPageState extends State<AccountPage> {
             context,
             PaymentAccountPage(),
           );
+        } else if (state is AccountLogOutActionState) {
+          Navigator.popUntil(context, (route) => route == const AccountPage());
+          HelperFunctions.navigateToScreenRightLeftAnimation(
+              context, const LoginPage());
+          FirebaseAuth.instance.signOut();
         }
       },
       builder: (context, state) {
@@ -145,6 +154,19 @@ class _AccountPageState extends State<AccountPage> {
                         ),
                         title: Text(
                           "Payment",
+                          style: MyTextThemes.myTextTheme().titleSmall,
+                        ),
+                      ),
+                      ListTile(
+                        onTap: () {
+                          accountBloc.add(AccountLogOutEvent());
+                        },
+                        leading: Icon(
+                          Icons.logout_outlined,
+                          color: AppColors.backgroundColor.withOpacity(0.8),
+                        ),
+                        title: Text(
+                          "Log out",
                           style: MyTextThemes.myTextTheme().titleSmall,
                         ),
                       ),

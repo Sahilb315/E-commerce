@@ -22,3 +22,5 @@ class AccountNavigateToOrderPageActionState extends AccountActionState {}
 class AccountNavigateToAddressPageActionState extends AccountActionState {}
 
 class AccountNavigateToPaymentPageActionState extends AccountActionState {}
+
+class AccountLogOutActionState extends AccountActionState {}

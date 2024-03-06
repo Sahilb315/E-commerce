@@ -1,7 +1,6 @@
 // ignore_for_file: depend_on_referenced_packages
 
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:e_commerce_app/features/account/repo/account_repo.dart';
@@ -18,19 +17,16 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     on<AccountNavigateToProfilePageEvent>(accountNavigateToProfilePageEvent);
     on<AccountNavigateToPaymentPageEvent>(accountNavigateToPaymentPageEvent);
     on<AccountInitialFetchEvent>(accountInitialFetchEvent);
+    on<AccountLogOutEvent>(accountLogOutEvent);
   }
 
   final accountRepo = AccountRepo();
 
   FutureOr<void> accountInitialFetchEvent(
       event, Emitter<AccountState> emit) async {
-    log("Before loading");
     emit(AccountLoadingState());
-    log("After loading");
     final user = await accountRepo.getUserInfo();
-    log("After repo");
     emit(AccountLoadedState(userModel: user));
-    log("After loaded");
   }
 
   FutureOr<void> accountNavigateToAddressPageEvent(
@@ -51,5 +47,10 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
   FutureOr<void> accountNavigateToPaymentPageEvent(
       AccountNavigateToPaymentPageEvent event, Emitter<AccountState> emit) {
     emit(AccountNavigateToPaymentPageActionState());
+  }
+
+  FutureOr<void> accountLogOutEvent(
+      AccountLogOutEvent event, Emitter<AccountState> emit) {
+    emit(AccountLogOutActionState());
   }
 }
