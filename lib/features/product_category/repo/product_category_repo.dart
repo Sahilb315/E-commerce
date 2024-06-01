@@ -3,12 +3,13 @@ import 'dart:developer';
 
 import 'package:e_commerce_app/constants/api_key.dart';
 import 'package:e_commerce_app/features/home/model/product_model.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
 class ProductCategoryRepo {
   Future<List<ProductModel>> fetchProductsByCatgory(int categoryId) async {
     try {
-      final res = await http.get(Uri.parse(API_KEY));
+      final res = await http.get(Uri.parse(dotenv.env['API_URL'].toString()));
       List data = jsonDecode(res.body);
       List<ProductModel> categorisedList = [];
       if (res.statusCode == 200) {

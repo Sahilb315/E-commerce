@@ -71,8 +71,8 @@ class _RegisterPageState extends State<RegisterPage> {
               builder: (context) => Center(
                 child: CircularProgressIndicator(
                   strokeWidth: 3,
-                  color: AppColors.backgroundColor.withOpacity(0.7),
                   strokeCap: StrokeCap.round,
+                  color: AppColors.backgroundColor.withOpacity(0.7),
                 ),
               ),
             );

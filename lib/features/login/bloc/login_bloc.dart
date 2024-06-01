@@ -33,10 +33,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       log("Before loading");
       emit(LoginSuccessfulLoadingActionState());
       log("After loading");
-      String successOrNot =
+      String? successOrNot =
           await loginRepo.loginUser(event.email, event.password);
       log("After Login func");
-      if (successOrNot.isEmpty) {
+      if (successOrNot == null) {
         emit(LoginSuccessfulActionState());
         log("After Login success ");
       } else {
